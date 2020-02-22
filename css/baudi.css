@@ -431,9 +431,9 @@ note{
       columns, 60
       );
 }
-
+/*
 taxonomy > desc{
-/*display:inline-block;*/
+/\*display:inline-block;*\/
 content: oxy_label(text, "Taxonomie:", width, 30px, styles,
       "font-weight:bold;color:black;")
       oxy_textfield(columns, 40, edit, "#text", "true");
@@ -475,3 +475,4 @@ content: oxy_label(text, "Typ:", width, 30px, styles,
       "font-weight:bold;color:black;")
       oxy_textfield(columns, 20, edit, "#text", "true");
 }
+*/

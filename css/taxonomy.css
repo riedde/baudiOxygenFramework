@@ -1,0 +1,67 @@
+/* CSS for BauDi Workbench */
+
+*:not(hi):not(lb){
+    display:block;
+    margin-top:5px;
+    float: left;
+    margin-right: 5px;
+    padding: 10px;
+    width: 90%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #bac945;
+    
+}
+
+person:before, org:before, place:before{
+    content: 'ID: ';
+}
+*:before{
+    display:inline-block
+}
+
+
+taxonomy > desc{
+/*display:inline-block;*/
+content: oxy_label(text, "Taxonomie:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 40, edit, "#text", "true");
+}
+
+category{
+content: oxy_label(text, "Kategorie", width, 30px, styles,
+      "font-weight:bold;color:black;") '\A'
+      oxy_label(text, "ID:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 10, edit, "@xml:id", "true")
+      ;
+}
+
+category > desc:before{
+content: oxy_label(text, "Sprache:", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+category > desc{
+content: oxy_checkbox(
+        edit, '@xml:lang',
+        values, "de",
+        uncheckedValues, '',
+        labels, 'deutsch')
+        oxy_checkbox(
+        edit, '@xml:lang',
+        values, "en",
+        uncheckedValues, '',
+        labels, 'englisch');
+}
+
+category > desc > name{
+content: oxy_label(text, "Typ:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 10, edit, "@type", "true")
+      '\A'
+      oxy_label(text, "Name:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 20, edit, "#text", "true");
+}
