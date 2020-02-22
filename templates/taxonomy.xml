@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classDecl xmlns="http://www.tei-c.org/ns/1.0">
+    <taxonomy>
+        <desc>Dictionary of something for oxygen xml framework</desc>
+        <category xml:id="cat1">
+            <desc xml:lang="de">
+                <name type="type1">Name1</name>
+            </desc>
+        </category>
+        <category xml:id="cat2">
+            <desc xml:lang="de">
+                <name type="nameType1">Name1</name>
+                <name type="nameType2">Name2</name>
+            </desc>
+        </category>
+    </taxonomy>
+</classDecl>

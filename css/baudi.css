@@ -1,0 +1,477 @@
+/* CSS for BauDi Workbench */
+
+*{
+    display:block;
+    margin-top:5px;
+    float: left;
+    margin-right: 5px;
+    padding: 10px;
+    width: 90%;
+    border: 1px solid #cccccc;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #bac945;
+    
+}
+
+person:before, org:before, place:before{
+    content: 'ID: ';
+}
+*:before{
+    display:inline-block
+}
+
+persName, forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], listPerson, idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode, event, desc, category, name{
+/*display: block;*/
+color: #bac945;
+padding: 10px 10px 10px 10px;
+}
+
+person > :not(persName), forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode{
+content: oxy_textfield(columns, 20, edit, "#text", "true");
+}
+:not(country):not(genName):not(faith):not(nationality):not(affiliation):not(persName):not(settlement)[key]{
+     -oxy-append-content: oxy_textfield(columns, 25, edit, "@key");
+}
+
+listPerson:before{
+  
+  content: oxy_label(text, "Zugehörige Personen:", width, 30px, styles,
+      "font-weight:bold;color:black;");
+  font-weight: bold;
+}
+
+person{
+    content: attr(xml\:id) oxy_combobox(
+            edit, "@sex", 
+            editable, false,
+            values, "male, female, unknown",
+            labels, "männlich, weiblich, unbekannt");
+}
+
+place, org{
+    content: attr(xml\:id);
+    }
+
+org > listPerson > person > persName:before{
+  color:black;
+  content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, 
+ oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+  '\A'
+  oxy_checkbox(
+        edit, '@type',
+        values, 'fouder',
+        uncheckedValues, 'Off',
+        labels, 'Gründer'
+) oxy_checkbox(
+        edit, '@type',
+        values, 'employee',
+        uncheckedValues, 'Off',
+        labels, 'Mitarbeiter'
+)
+ oxy_checkbox(
+        edit, '@type',
+        values, 'other',
+        uncheckedValues, 'Off',
+        labels, 'Sonstige'
+);
+}
+
+person > persName {
+    
+}
+forename:before{
+  content: oxy_label(text, "Vorname", width, 30px, styles,
+      "font-weight:bold;color:black;")
+  oxy_combobox(
+            edit, "@sort", 
+            editable, false,
+            values, "1, 2, 3, 4, 5",
+            labels, "1, 2, 3, 4, 5")
+  oxy_checkbox(
+        edit, '@type',
+        values, "used",
+        uncheckedValues, '',
+        labels, 'benutzt');
+}
+
+surname:before{
+	content: oxy_label(text, "Nachname", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, " , birth, married",
+            labels, " , Geburtsname, Ehename");
+}
+genName:before{
+	content: oxy_label(text, "Generation", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_combobox(
+            edit, "@key",
+            editable, false,
+            values, " , jun, sen",
+            labels, " , Junior, Senior");
+}
+nameLink:before{
+  
+	content: oxy_label(text, "Adelstitel", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+roleName:before{
+  
+	content: oxy_label(text, "Funktion", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+addName:before{
+  
+	content: oxy_label(text, "Beiname", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+birth:before{
+  
+	content: oxy_label(text, "Geburtsdatum", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+birth{
+    content: oxy_label(text, "\A (@when)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@when-custom")
+oxy_label(text, "\A (@notBefore)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notBefore-custom")
+oxy_label(text, "\A (@notAfter)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notAfter-custom");
+}
+death:before{
+  
+	content: oxy_label(text, "Sterbedatum", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+death{
+    content: oxy_label(text, "\A (@when)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@when-custom")
+oxy_label(text, "\A (@notBefore)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notBefore-custom")
+oxy_label(text, "\A (@notAfter)", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notAfter-custom")
+}
+faith:before{
+  
+	content: oxy_label(text, "Konfession", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+faith{
+   color:black;
+   content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, " , protestant, katholic, presbyterian, lutherian, none",
+            labels, " , Protestant(in), Katholik(in), Presbyterianer(in), Lutheraner(in), keine")
+;
+}
+education:before{
+	content: oxy_label(text, "Ausbildung", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+sex:before{
+	content: oxy_label(text, "Geschlecht", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+sex{
+   content: oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, "male, female, unknown",
+            labels, "männlich, weiblich, unbekannt");
+}
+nationality:before{
+	content: oxy_label(text, "Staatsangehörigkeit", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+nationality{
+    content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='nationality'],', ')"));
+}
+
+occupation:before{
+  
+	content: oxy_label(text, "Beruf", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+affiliation:before{
+	content: oxy_label(text, "Affiliation", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      " (" oxy_label(text, attr(key), width, 30px, styles,
+      "font-weight:normal;color:grey;")")"
+      oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
+;
+}
+idno[type=gnd]:before{
+	content: oxy_label(text, "GND", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      /*oxy_button(
+         actionID, 'getViafByGnd',
+         showIcon, true
+)*/
+;
+}
+idno[type=gnd]:after{
+display: block;
+	content: oxy_browser(
+            href, 
+      oxy_url('http://d-nb.info/gnd/', oxy_xpath("//idno[@type='gnd']/string()")), 
+            width, 100%,
+            height, 80%
+    );
+}
+idno[type=viaf]:before{
+	content: oxy_label(text, "VIAF", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+idno[type=viaf]:after{
+display: block;
+	content: oxy_browser(
+            href, 
+      oxy_url('http://viaf.org/viaf/', oxy_xpath("//idno[@type='viaf']/string()")), 
+            width, 100%,
+            height, 80%
+    );
+}
+note:before{
+	content: oxy_label(text, "Anmerkungen", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+location > placeName:before{
+      content: oxy_label(text, "Ggf. Name der Örtlichkeit", width, 30px, styles,"font-weight:bold;color:black;")
+      oxy_textfield(columns, 20, edit, "#text", "true");
+      }
+placeName:before{
+  content: oxy_label(text, "Name des Ortes", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 20, edit, "#text", "true")
+      oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
+            '\A'
+      oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@when-custom")
+oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@from-custom")
+ oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@to-custom")
+oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notBefore-custom")
+oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notAfter-custom");
+}
+placeName{
+    color: #bac945;
+}
+location:before{
+content: oxy_label(text, "Örtlichkeit", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+street:before{
+  content: oxy_label(text, "Straße", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+num:before{
+  color: #bac945;
+padding: 10px 10px 10px 10px;
+  content: oxy_label(text, "Nr.", width, 5px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 5, edit, "#text", "true");
+}
+postCode:before{
+  content: oxy_label(text, "Postleitzahl", width, 10px, styles,
+      "font-weight:bold;color:black;");
+}
+geogName:before{
+	content: oxy_label(text, "Geographischer Name", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+settlement:before{
+	content: oxy_label(text, "Stadt", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 20, edit, "#text", "true");
+}
+settlement{
+/*color: #bac945;
+padding: 10px 10px 10px 10px;*/
+    content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
+            ;
+}
+region:before{
+	content: oxy_label(text, "Region", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+country:before{
+	content: oxy_label(text, "Land", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+country{
+    content: oxy_combobox(
+            edit, "@key", 
+            editable, false,
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='country'],', ')"));
+
+}
+
+orgName:before{
+	content: oxy_label(text, "Name der Institution", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+orgName{
+    color: #bac945;
+    content: 
+      oxy_textfield(columns, 20, edit, "#text", "true")
+      oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@when-custom")
+oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@from-custom")
+ oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@to-custom")
+oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notBefore-custom")
+oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notAfter-custom");
+}
+
+desc > date:before{
+	content: oxy_label(text, "Datum", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+desc > date{
+    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
+}
+
+/**:focus {
+  border: 3px solid #555;
+}*/
+
+event:before{
+	content: oxy_label(text, "Event", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_action(
+                 name, 'Event validieren',
+                 operation, 'ro.sync.ecss.extensions.commons.operations.ChangeAttributesOperation',
+                 arg-elementLocations, './tei:desc/*',
+                 arg-attributeNames, 'xmlns',
+                 arg-values, '',
+                 arg-removeIfEmpty, 'true'
+                 );
+}
+
+event > label:before{
+	content: oxy_label(text, "Name des Events", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+event > label{
+    content: oxy_textfield(columns, 20, edit, "#text", "true");
+}
+event > desc:before{
+	content: oxy_label(text, "Beschreibung", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textArea(
+      edit, '#content',
+      contentType, 'text/xml',
+      rows, 10,
+      columns, 60);
+}
+
+event > desc > date{
+    content: oxy_label(text, "\A Aktion:", width, 20px, styles, "font-weight:normal;color:black;")
+    oxy_combobox(
+            edit, "@type", 
+            editable, false,
+            values, ' ,established, closed, renamed',
+            labels, ' ,gegründet, aufgegeben, umbenannt')
+    oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@when-custom")
+oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@from-custom")
+ oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@to-custom")
+oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notBefore-custom")
+oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
+ oxy_textfield(columns, 12, edit, "@notAfter-custom")
+ ;
+
+}
+
+note{
+    content: oxy_textArea(
+      edit, '#content',
+      contentType, 'text/xml',
+      rows, 10,
+      columns, 60
+      );
+}
+
+taxonomy > desc{
+/*display:inline-block;*/
+content: oxy_label(text, "Taxonomie:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 40, edit, "#text", "true");
+}
+
+category{
+content: oxy_label(text, "Kategorie", width, 30px, styles,
+      "font-weight:bold;color:black;") '\A'
+      oxy_label(text, "ID:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 10, edit, "@xml:id", "true")
+      ;
+}
+
+category > desc:before{
+content: oxy_label(text, "Sprache:", width, 30px, styles,
+      "font-weight:bold;color:black;");
+}
+
+category > desc{
+content: oxy_checkbox(
+        edit, '@xml:lang',
+        values, "de",
+        uncheckedValues, '',
+        labels, 'deutsch')
+        oxy_checkbox(
+        edit, '@xml:lang',
+        values, "en",
+        uncheckedValues, '',
+        labels, 'englisch');
+}
+
+category > desc > name{
+content: oxy_label(text, "Typ:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 10, edit, "@type", "true")
+      '\A'
+      oxy_label(text, "Name:", width, 30px, styles,
+      "font-weight:bold;color:black;")
+      oxy_textfield(columns, 20, edit, "#text", "true");
+}
