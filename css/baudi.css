@@ -1,6 +1,6 @@
 /* CSS for BauDi Workbench */
 
-*{
+*:not(hi):not(lb){
     display:block;
     margin-top:5px;
     float: left;
