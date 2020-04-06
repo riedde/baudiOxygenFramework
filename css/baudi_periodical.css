@@ -1,0 +1,11 @@
+quote:before{
+    content:"»";
+}
+
+quote:after{
+    content:"«";
+}
+
+span[type=box]{
+    border-color:black
+}
