@@ -14,12 +14,58 @@
     
 }
 
-person:before, org:before, place:before{
-    content: 'ID: ';
-}
 *:before{
     display:inline-block
 }
+
+mei:before {
+    content: 'ID: ';
+}
+
+mei {
+    content: attr(xml\:id);
+}
+
+lb{
+    content:'\A'
+}
+
+rend[halign=center]{
+    text-align: center;
+}
+rend[halign=right]{
+    text-align: right;
+}
+rend[rend=italic]{
+    font-style: italic;
+}
+rend[rend=bold]{
+    font-weight: bold;
+}
+rend[rend=underline]{
+    text-decoration: underline;
+}
+rend[rend=stroke]{
+    text-decoration: line-through;
+}
+
+rend[rend=ellipsis] {
+  white-space: nowrap; 
+  width: 50px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  border: 1px solid #000000;
+}
+
+rend[rend=unreadable] {
+  white-space: nowrap; 
+  width: 50px; 
+  overflow: hidden;
+  text-overflow: "---"; 
+  border: 1px solid #000000;
+}
+
+
 
 persName, forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], listPerson, idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode, event, desc, category, name{
 /*display: block;*/
@@ -30,13 +76,14 @@ padding: 10px 10px 10px 10px;
 person > :not(persName), forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode{
 content: oxy_textfield(columns, 20, edit, "#text", "true");
 }
+
 :not(country):not(genName):not(faith):not(nationality):not(affiliation):not(persName):not(settlement)[key]{
      -oxy-append-content: oxy_textfield(columns, 25, edit, "@key");
 }
 
-listPerson:before{
+fileDesc > titleStmt:before{
   
-  content: oxy_label(text, "Zugehörige Personen:", width, 30px, styles,
+  content: oxy_label(text, "Titelei:", width, 30px, styles,
       "font-weight:bold;color:black;");
   font-weight: bold;
 }
@@ -431,9 +478,9 @@ note{
       columns, 60
       );
 }
-
+/*
 taxonomy > desc{
-/*display:inline-block;*/
+/\*display:inline-block;*\/
 content: oxy_label(text, "Taxonomie:", width, 30px, styles,
       "font-weight:bold;color:black;")
       oxy_textfield(columns, 40, edit, "#text", "true");
@@ -475,3 +522,4 @@ content: oxy_label(text, "Typ:", width, 30px, styles,
       "font-weight:bold;color:black;")
       oxy_textfield(columns, 20, edit, "#text", "true");
 }
+*/

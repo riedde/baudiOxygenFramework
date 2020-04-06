@@ -1,0 +1,352 @@
+*{display:block;
+border: 1px solid #cccccc;}
+
+*{
+  color:white;
+}
+
+*:before {
+color:black;
+}
+
+
+criticalReport:before {
+  content: 'Werk: ' oxy_xpath("doc(concat('../',@work,'.xml'))//mei:work/mei:title[1]/string()") ' – ' oxy_xpath('count(//remark)') ' Anmerkungen' '\A WerkID: ' attr(work);
+  font-weight: bold
+  }
+
+remark{
+  width: 800px;
+  border: 5px solid grey;
+  padding: 20px;
+  margin: 10px;
+}
+remark:before {
+border:black;
+  content: '\A Art: ' oxy_checkbox(
+        edit, '@type',
+        values, 'editorial',
+        labels, 'Editorischer Eingriff')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'reading',
+        labels, 'Lesart')
+        oxy_checkbox(
+        edit, '@type',
+        values, 'annot',
+        labels, 'Bemerkung')
+}
+remark:after{
+  content:'\A'
+}
+
+measureStart:before {
+  content: 'Anfangstakt: '
+}
+
+measureStart{
+  content:oxy_textfield(columns, 5, edit, "#text", "true");
+}
+measureEnd:before {
+  content: 'Endtakt: '
+  
+}
+measureEnd{
+  content:oxy_textfield(columns, 5, edit, "#text", "true");
+}
+
+countTimeStart:before {
+  content: 'Anfangszählzeit: '
+}
+countTimeStart{
+  content:oxy_textfield(columns, 3, edit, "#text", "true");
+}
+countTimeEnd:before {
+color:black;
+  content: 'Endzählzeit: ' oxy_textfield(columns, 3, edit, "#text", "true");
+}
+
+layer:before {
+  content: 'Systeme:\A'
+           oxy_checkbox(
+           edit, '@pianoRight',
+           values, 'true',
+           labels, 'I')
+           oxy_checkbox(
+           edit, '@pianoLeft',
+           values, 'true',
+           labels, 'II')
+           oxy_checkbox(
+           edit, '@pedal',
+           values, 'true',
+           labels, 'Pedal')
+            oxy_checkbox(
+           edit, '@organ',
+           values, 'true',
+           labels, 'Org')
+            oxy_checkbox(
+           edit, '@harmonium',
+           values, 'true',
+           labels, 'Harm')
+           '\A'
+           oxy_checkbox(
+           edit, '@piccolo',
+           values, 'true',
+           labels, 'Picc')
+           oxy_checkbox(
+           edit, '@flute',
+           values, 'true',
+           labels, 'Fl')
+           oxy_checkbox(
+           edit, '@fluteI',
+           values, 'true',
+           labels, 'Fl1')
+           oxy_checkbox(
+           edit, '@fluteII',
+           values, 'true',
+           labels, 'Fl2')
+           oxy_checkbox(
+           edit, '@oboe',
+           values, 'true',
+           labels, 'Ob')
+           oxy_checkbox(
+           edit, '@oboeI',
+           values, 'true',
+           labels, 'Ob1')
+           oxy_checkbox(
+           edit, '@oboeII',
+           values, 'true',
+           labels, 'Ob2')
+           '\A'
+           oxy_checkbox(
+           edit, '@violin',
+           values, 'true',
+           labels,'Vl')
+           oxy_checkbox(
+           edit, '@violinI',
+           values, 'true',
+           labels, 'Vl1')
+           oxy_checkbox(
+           edit, '@violinII',
+           values, 'true',
+           labels, 'Vl2')
+           oxy_checkbox(
+           edit, '@viola',
+           values, 'true',
+           labels, 'Vla')
+           oxy_checkbox(
+           edit, '@cello',
+           values, 'true',
+           labels, 'Vlc')
+           oxy_checkbox(
+           edit, '@bassInstr',
+           values, 'true',
+           labels, 'Kb')
+           '\A'
+           oxy_checkbox(
+           edit, '@trumpet',
+           values, 'true',
+           labels, 'Trp')
+           oxy_checkbox(
+           edit, '@trumpetI',
+           values, 'true',
+           labels, 'Trp1')
+           oxy_checkbox(
+           edit, '@trumpetII',
+           values, 'true',
+           labels, 'Trp2')
+           oxy_checkbox(
+           edit, '@corno',
+           values, 'true',
+           labels, 'Hrn')
+           oxy_checkbox(
+           edit, '@cornoI',
+           values, 'true',
+           labels, 'Hrn1')
+           oxy_checkbox(
+           edit, '@cornoII',
+           values, 'true',
+           labels, 'Hrn2')
+           oxy_checkbox(
+           edit, '@cornoIII',
+           values, 'true',
+           labels, 'Hrn3')
+           oxy_checkbox(
+           edit, '@cornoIV',
+           values, 'true',
+           labels, 'Hrn4')
+           '\A'
+           oxy_checkbox(
+           edit, '@trombone',
+           values, 'true',
+           labels, 'Pos')
+           oxy_checkbox(
+           edit, '@tromboneI',
+           values, 'true',
+           labels, 'Pos1')
+           oxy_checkbox(
+           edit, '@tromboneII',
+           values, 'true',
+           labels, 'Pos2')
+           oxy_checkbox(
+           edit, '@tromboneIII',
+           values, 'true',
+           labels, 'Pos3')
+           oxy_checkbox(
+           edit, '@tuba',
+           values, 'true',
+           labels, 'Tb')
+           '\A'
+           oxy_checkbox(
+           edit, '@timpani',
+           values, 'true',
+           labels, 'Pk')
+           oxy_checkbox(
+           edit, '@harpa',
+           values, 'true',
+           labels, 'Hfe')
+           '\A'
+           'Solo:\A'
+           oxy_checkbox(
+           edit, '@sopranoSolo',
+           values, 'true',
+           labels, 'S')
+           oxy_checkbox(
+           edit, '@mezzoSolo',
+           values, 'true',
+           labels, 'Mezzo')
+           oxy_checkbox(
+           edit, '@altoSolo',
+           values, 'true',
+           labels, 'A')
+           oxy_checkbox(
+           edit, '@tenoreSolo',
+           values, 'true',
+           labels, 'T')
+           oxy_checkbox(
+           edit, '@baritoneSolo',
+           values, 'true',
+           labels, 'Bar')
+           oxy_checkbox(
+           edit, '@bassSolo',
+           values, 'true',
+           labels, 'B')
+           '\A'
+           'Chor:\A'
+           oxy_checkbox(
+           edit, '@soprano',
+           values, 'true',
+           labels, 'S')
+           oxy_checkbox(
+           edit, '@sopranoI',
+           values, 'true',
+           labels, 'S1')
+           oxy_checkbox(
+           edit, '@sopranoII',
+           values, 'true',
+           labels, 'S2')
+           oxy_checkbox(
+           edit, '@alto',
+           values, 'true',
+           labels, 'A')
+           oxy_checkbox(
+           edit, '@altoI',
+           values, 'true',
+           labels, 'A1')
+           oxy_checkbox(
+           edit, '@altoII',
+           values, 'true',
+           labels, 'A2')
+           oxy_checkbox(
+           edit, '@tenore',
+           values, 'true',
+           labels, 'T')
+           oxy_checkbox(
+           edit, '@tenoreI',
+           values, 'true',
+           labels, 'T1')
+           oxy_checkbox(
+           edit, '@tenoreII',
+           values, 'true',
+           labels, 'T2')
+           oxy_checkbox(
+           edit, '@bass',
+           values, 'true',
+           labels, 'B')
+           oxy_checkbox(
+           edit, '@bassI',
+           values, 'true',
+           labels, 'B1')
+           oxy_checkbox(
+           edit, '@bassII',
+           values, 'true',
+           labels, 'B2')
+}
+
+voice:before {
+  content: 'Stimme: ' oxy_checkbox(
+        edit, '@upper',
+        values, 'true',
+        labels, 'Oberstimme')
+        oxy_checkbox(
+        edit, '@middle',
+        values, 'true',
+        labels, 'Mittelstimme')
+        oxy_checkbox(
+        edit, '@sub',
+        values, 'true',
+        labels, 'Unterstimme')
+
+}
+
+item:before {
+  content: 'Kategorie: 'oxy_combobox( 
+            edit, '@category',
+            editable, false,
+            values, 'Notentext, Tondauer, Bogensetzung, Dynamik, Halsung, Artikulation, Vortagsbezeichnung, Tempoangabe, Metrum, Pausensetzung,Bemerkung,Beschreibung,Streichung,Sonstige')
+}
+
+mdiv:before{
+  content: 'Satz: 'oxy_textfield(columns, 3, edit, "#text", "true");
+}
+
+note:before {
+  content: 'Text: '
+}
+note{
+  content:oxy_textArea(
+          edit, '#text',
+          contentType, 'text',
+          rows, 5,
+          columns, 60)
+}
+
+note[type='intern']:before {
+  content: 'Berm. (intern): '
+}
+note[type='intern']{
+  content:oxy_textArea(
+          edit, '#text',
+          contentType, 'text',
+          rows, 3,
+          columns, 50)
+}
+
+sources:before {
+  content: 'Quellen: '
+}
+
+sources{
+  content: oxy_checkbox(
+        edit, '@sourceI',
+        values, 'true',
+        labels, 'SV')
+        oxy_checkbox(
+        edit, '@sourceII',
+        values, 'true',
+        labels, 'SV-KA')
+        oxy_checkbox(
+        edit, '@sourceIII',
+        values, 'true',
+        labels, 'ED')
+}

@@ -9,7 +9,7 @@
 						<null/>
 					</field>
 					<field name="name">
-						<String>BauDi</String>
+						<String>BauDi-MEI</String>
 					</field>
 					<field name="schemaDescriptor">
 						<docTypeSchema>
@@ -17,7 +17,7 @@
 								<Integer>4</Integer>
 							</field>
 							<field name="uri">
-								<String>${framework}/schema/tei_baudi.rng</String>
+								<String>${frameworks}/baudi/schema/mei_baudi.rng</String>
 							</field>
 						</docTypeSchema>
 					</field>
@@ -33,19 +33,19 @@
 								<cssFile-array>
 									<cssFile>
 										<field name="href">
-											<String>${framework}/css/baudi.css</String>
+											<String>${frameworks}/baudi/css/baudi_mei.css</String>
 										</field>
 										<field name="title">
-											<String>Person</String>
+											<String>MEI</String>
 										</field>
 										<field name="alternate">
-											<Boolean>true</Boolean>
+											<Boolean>false</Boolean>
 										</field>
 									</cssFile>
 								</cssFile-array>
 							</field>
 							<field name="mergeCSSsFromDocument">
-								<Boolean>true</Boolean>
+								<Boolean>false</Boolean>
 							</field>
 							<field name="multipleAlternateSelectionEnabled">
 								<Boolean>true</Boolean>
@@ -84,7 +84,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/xql/newFileID.xql</String>
+																<String>${frameworksDir}/baudi/xql/newFileID.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -134,7 +134,7 @@
 															</entry>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/xslt/persNamesSorted.xsl</String>
+																<String>${frameworksDir}/baudi/xslt/persNamesSorted.xsl</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -184,7 +184,7 @@
 															</entry>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/xslt/persIDsSorted.xsl</String>
+																<String>${frameworksDir}/baudi/xslt/persIDsSorted.xsl</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -230,7 +230,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/xql/getViafNoViaGndNo.xql</String>
+																<String>${frameworksDir}/baudi/xql/getViafNoViaGndNo.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -255,7 +255,7 @@
 										<String></String>
 									</field>
 									<field name="iconPath">
-										<String>${framework}/icons/icon.png</String>
+										<String>${frameworks}/baudi/icons/icon.png</String>
 									</field>
 									<field name="menuEntriesDescriptorList">
 										<menuEntry-array>
@@ -360,7 +360,7 @@
 					</field>
 					<field name="templatesLocations">
 						<String-array>
-							<String>${frameworkDir}/templates</String>
+							<String>${frameworksDir}/baudi/templates/mei</String>
 						</String-array>
 					</field>
 					<field name="xmlCatalogs">
@@ -373,88 +373,10 @@
 						<documentTypeRule-array>
 							<documentTypeRule>
 								<field name="namespace">
-									<String>http://www.tei-c.org/ns/1.0</String>
+									<String>http://www.music-encoding.org/ns/mei</String>
 								</field>
 								<field name="rootElem">
-									<String>person</String>
-								</field>
-								<field name="fileName">
-									<String>*</String>
-								</field>
-								<field name="publicID">
-									<String>*</String>
-								</field>
-								<field name="javaRuleClass">
-									<String></String>
-								</field>
-								<field name="attributeLocalName">
-									<String>*</String>
-								</field>
-								<field name="attributeNamespace">
-									<String>*</String>
-								</field>
-								<field name="attributeValue">
-									<String>*</String>
-								</field>
-							</documentTypeRule>
-							<documentTypeRule>
-								<field name="namespace">
-									<String>http://www.tei-c.org/ns/1.0</String>
-								</field>
-								<field name="rootElem">
-									<String>org</String>
-								</field>
-								<field name="fileName">
-									<String>*</String>
-								</field>
-								<field name="publicID">
-									<String>*</String>
-								</field>
-								<field name="javaRuleClass">
-									<String></String>
-								</field>
-								<field name="attributeLocalName">
-									<String>*</String>
-								</field>
-								<field name="attributeNamespace">
-									<String>*</String>
-								</field>
-								<field name="attributeValue">
-									<String>*</String>
-								</field>
-							</documentTypeRule>
-							<documentTypeRule>
-								<field name="namespace">
-									<String>http://www.tei-c.org/ns/1.0</String>
-								</field>
-								<field name="rootElem">
-									<String>place</String>
-								</field>
-								<field name="fileName">
-									<String>*</String>
-								</field>
-								<field name="publicID">
-									<String>*</String>
-								</field>
-								<field name="javaRuleClass">
-									<String></String>
-								</field>
-								<field name="attributeLocalName">
-									<String>*</String>
-								</field>
-								<field name="attributeNamespace">
-									<String>*</String>
-								</field>
-								<field name="attributeValue">
-									<String>*</String>
-								</field>
-							</documentTypeRule>
-							<documentTypeRule>
-								<field name="namespace">
-									<String>http://www.tei-c.org/ns/1.0</String>
-								</field>
-								<field name="rootElem">
-									<String>classDecl</String>
+									<String>mei</String>
 								</field>
 								<field name="fileName">
 									<String>*</String>
