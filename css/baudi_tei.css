@@ -11,6 +11,7 @@
     font-size: 18px;
     font-weight: bold;
     background-color: #bac945;
+    visibility:-oxy-collapse-text;
     
 }
 
@@ -476,3 +477,15 @@ content: oxy_label(text, "Typ:", width, 30px, styles,
       oxy_textfield(columns, 20, edit, "#text", "true");
 }
 */
+
+quote:before{
+    content:"»";
+}
+
+quote:after{
+    content:"«";
+}
+
+span[type=box]{
+    border-color:black
+}
