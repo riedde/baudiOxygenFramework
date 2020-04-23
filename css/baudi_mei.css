@@ -1,525 +1,550 @@
-/* CSS for BauDi Workbench */
+mei{
+  display:block;
+  background-color:rgb(240, 240, 240);
+  border:1px solid black;
+  padding-left:5px;
+  content:'Quellenbeschreibung ('oxy_xpath('@xml:id')')\A';
 
-*:not(hi):not(lb){
+}
+
+pubStmt,
+fileDesc > respStmt,
+encodingDesc,
+sourceDesc,
+incip,
+titlePage > *,
+condition > *,
+repository >*,
+creation >*,
+history >*,
+contents > *,
+revisionDesc,
+biblList,
+facsimile,
+scoreDef,
+section
+{display:none !important;
+visibility:-oxy-collapse-text;
+}
+
+titlePart,
+title,
+tempo,
+perfRes,
+identifier,
+persName,
+titlePage,
+dimensions,
+extent,
+condition,
+hand,
+physMedium,
+physLoc > *,
+creation >*,
+history >*,
+l
+{visibility:-oxy-collapse-text;
+ display:block;}
+
+fileDesc:before {
     display:block;
-    margin-top:5px;
-    float: left;
-    margin-right: 5px;
-    padding: 10px;
-    width: 90%;
-    border: 1px solid #cccccc;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #bac945;
-    
+    background-color:rgb(200, 200, 200);
+    border:1px solid black;
+    content: "Part 1. File Description";
+    padding-left:5px;
 }
 
-*:before{
-    display:inline-block
+fileDesc{}
+
+titlePart[type=main]:before {
+    content:
+    oxy_label(text, "Titel", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 10)
+}
+titlePart[type=sub]:before {
+    content:
+    oxy_label(text, "Untertitel", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+}
+titlePart[type=desc]:before {
+    content:
+    oxy_label(text, "Beschreibung", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
 }
 
-mei:before {
-    content: 'ID: ';
+work:before {
+    display:block;
+    background-color:rgb(200, 200, 200);
+    border:1px solid black;
+    content: "Teil 2. Informationen zum Werk";
+    padding-left:5px;
 }
 
-mei {
-    content: attr(xml\:id);
+work > title{
+display:block;
+  content:
+    oxy_label(text, "Titel (Dipl.)", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
 }
-
-lb{
-    content:'\A'
-}
-
-rend[halign=center]{
-    text-align: center;
-}
-rend[halign=right]{
-    text-align: right;
-}
-rend[rend=italic]{
-    font-style: italic;
-}
-rend[rend=bold]{
-    font-weight: bold;
-}
-rend[rend=underline]{
-    text-decoration: underline;
-}
-rend[rend=stroke]{
-    text-decoration: line-through;
-}
-
-rend[rend=ellipsis] {
-  white-space: nowrap; 
-  width: 50px; 
-  overflow: hidden;
-  text-overflow: ellipsis; 
-  border: 1px solid #000000;
-}
-
-rend[rend=unreadable] {
-  white-space: nowrap; 
-  width: 50px; 
-  overflow: hidden;
-  text-overflow: "---"; 
-  border: 1px solid #000000;
-}
-
-
-
-persName, forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], listPerson, idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode, event, desc, category, name{
-/*display: block;*/
-color: #bac945;
-padding: 10px 10px 10px 10px;
-}
-
-person > :not(persName), forename, surname, nameLink, roleName, addName, birth, death, faith, education, sex, nationality, occupation, idno[type=gnd], idno[type=viaf], note, region, settlement, date, geogName, adress, street, postCode{
-content: oxy_textfield(columns, 20, edit, "#text", "true");
-}
-
-:not(country):not(genName):not(faith):not(nationality):not(affiliation):not(persName):not(settlement)[key]{
-     -oxy-append-content: oxy_textfield(columns, 25, edit, "@key");
-}
-
-fileDesc > titleStmt:before{
-  
-  content: oxy_label(text, "Titelei:", width, 30px, styles,
-      "font-weight:bold;color:black;");
-  font-weight: bold;
-}
-
-person{
-    content: attr(xml\:id) oxy_combobox(
-            edit, "@sex", 
+key {
+display:block;
+  content: oxy_label(text, "Tonart:", width, 20%)
+  oxy_combobox( 
+            edit, '@pname',
             editable, false,
-            values, "male, female, unknown",
-            labels, "männlich, weiblich, unbekannt");
-}
-
-place, org{
-    content: attr(xml\:id);
-    }
-
-org > listPerson > person > persName:before{
-  color:black;
-  content: oxy_combobox(
-            edit, "@key", 
-            editable, false,
-            values, 
- oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
-  '\A'
-  oxy_checkbox(
-        edit, '@type',
-        values, 'fouder',
-        uncheckedValues, 'Off',
-        labels, 'Gründer'
-) oxy_checkbox(
-        edit, '@type',
-        values, 'employee',
-        uncheckedValues, 'Off',
-        labels, 'Mitarbeiter'
+            values, 'c,d,e,f,g,a,h',
+            labels, 'C,D,E,F,G,A,H'
 )
- oxy_checkbox(
-        edit, '@type',
-        values, 'other',
-        uncheckedValues, 'Off',
-        labels, 'Sonstige'
-);
-}
-
-person > persName {
-    
-}
-forename:before{
-  content: oxy_label(text, "Vorname", width, 30px, styles,
-      "font-weight:bold;color:black;")
-  oxy_combobox(
-            edit, "@sort", 
+oxy_combobox( 
+            edit, '@accid',
             editable, false,
-            values, "1, 2, 3, 4, 5",
-            labels, "1, 2, 3, 4, 5")
-  oxy_checkbox(
-        edit, '@type',
-        values, "used",
-        uncheckedValues, '',
-        labels, 'benutzt');
-}
-
-surname:before{
-	content: oxy_label(text, "Nachname", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_combobox(
-            edit, "@type", 
+            values, 's,ss,f,ff',
+            labels, '#,x,b,bb'
+)
+oxy_combobox( 
+            edit, '@mode',
             editable, false,
-            values, " , birth, married",
-            labels, " , Geburtsname, Ehename");
+            values, 'major,minor,dorian,phrygian,lydian,mixolydian,aeolian,locrian',
+            labels, 'Dur,Moll,Dorisch,Phrygisch,Lydisch,Mixolydisch,Äolisch,Lokrisch'
+)
+
 }
-genName:before{
-	content: oxy_label(text, "Generation", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_combobox(
-            edit, "@key",
+
+meter{
+display:block;
+  content: oxy_label(text, "Taktangabe:", width, 20%)
+  oxy_combobox( 
+            edit, '@count',
+            editable, true,
+            values, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16',
+            labels, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16'
+)
+oxy_combobox( 
+            edit, '@unit',
             editable, false,
-            values, " , jun, sen",
-            labels, " , Junior, Senior");
-}
-nameLink:before{
-  
-	content: oxy_label(text, "Adelstitel", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-roleName:before{
-  
-	content: oxy_label(text, "Funktion", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-addName:before{
-  
-	content: oxy_label(text, "Beiname", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-birth:before{
-  
-	content: oxy_label(text, "Geburtsdatum", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-birth{
-    content: oxy_label(text, "\A (@when)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@when-custom")
-oxy_label(text, "\A (@notBefore)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notBefore-custom")
-oxy_label(text, "\A (@notAfter)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notAfter-custom");
-}
-death:before{
-  
-	content: oxy_label(text, "Sterbedatum", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-death{
-    content: oxy_label(text, "\A (@when)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@when-custom")
-oxy_label(text, "\A (@notBefore)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notBefore-custom")
-oxy_label(text, "\A (@notAfter)", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notAfter-custom")
-}
-faith:before{
-  
-	content: oxy_label(text, "Konfession", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-faith{
-   color:black;
-   content: oxy_combobox(
-            edit, "@key", 
+            values, '1,2,4,8,16,32',
+            labels, '1,2,4,8,16,32'
+)
+oxy_combobox( 
+            edit, '@sym',
             editable, false,
-            values, " , protestant, katholic, presbyterian, lutherian, none",
-            labels, " , Protestant(in), Katholik(in), Presbyterianer(in), Lutheraner(in), keine")
-;
+            values, 'common,cut',
+            labels, 'C,Alla breve'
+)
 }
-education:before{
-	content: oxy_label(text, "Ausbildung", width, 30px, styles,
-      "font-weight:bold;color:black;");
+
+tempo{
+display:block;
+  content:
+    oxy_label(text, "Tempoangabe:", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
 }
-sex:before{
-	content: oxy_label(text, "Geschlecht", width, 30px, styles,
-      "font-weight:bold;color:black;");
+
+perfMedium:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 2.2 Besetzung";
+    padding-left:5px;
 }
-sex{
-   content: oxy_combobox(
-            edit, "@type", 
+
+perfResList {
+  display:block;
+}
+perfRes{
+display:block;
+border:1px solid black;
+  padding-left:5px;
+content:oxy_label(text, "Instrumentenangabe (Dipl.):", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+        '\A'
+        oxy_label(text, "Anzahl:", width, 20%) 
+        oxy_textfield(edit, '@count', columns, 4)
+        oxy_checkbox(edit, '@solo', values, 'true', labels, 'Solo')
+        '\A'
+        oxy_label(text, "Instrument:", width, 20%)
+        oxy_combobox( 
+            edit, '@auth',
             editable, false,
-            values, "male, female, unknown",
-            labels, "männlich, weiblich, unbekannt");
-}
-nationality:before{
-	content: oxy_label(text, "Staatsangehörigkeit", width, 30px, styles,
-      "font-weight:bold;color:black;");
+            values, '',
+            labels, '')
 }
 
-nationality{
-    content: oxy_combobox(
-            edit, "@key", 
+contents{display:block;
+border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Inhalt (content):", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 44)
+           
+}
+
+manifestationList:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3 Beschreibung der Quelle (Dipolomatisch)";
+    padding-left:5px;
+}
+
+manifestation {
+  display:block;
+  background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3.1 Allgemeine Beschreibung";
+    padding-left:5px;
+}
+identifier{
+display:block;
+border:1px solid black;
+  padding-left:5px;
+content:oxy_label(text, "Signatur/ID:", width, 20%) 
+        oxy_combobox( 
+            edit, '@type',
+            editable, true,
+            values, 'rism,D-KA',
+            labels, 'RISM,D-KA')
+        oxy_textfield(edit, '#text', columns, 30)
+}
+
+titlePart[type=main]:before {
+    content:
+    oxy_label(text, "Titel", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+}
+title[type=subordinate]:before {
+    content:
+    oxy_label(text, "Untertitel", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+}
+title[type=desc]:before {
+    content:
+    oxy_label(text, "Beschreibung", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+}
+composer > persName{
+display:block;
+  content:
+    oxy_label(text, "Komponist:", width, 20%) 
+        oxy_combobox(
+        width, 20%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+        oxy_combobox( 
+            edit, '@auth',
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='nationality'],', ')"));
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
-
-occupation:before{
-  
-	content: oxy_label(text, "Beruf", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-affiliation:before{
-	content: oxy_label(text, "Affiliation", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      " (" oxy_label(text, attr(key), width, 30px, styles,
-      "font-weight:normal;color:grey;")")"
-      oxy_combobox(
-            edit, "@key", 
+arranger > persName{
+display:block; 
+ content:
+    oxy_label(text, "Bearbeiter:", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 20)
+        oxy_combobox( 
+            edit, '@auth',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
-;
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
-idno[type=gnd]:before{
-	content: oxy_label(text, "GND", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      /*oxy_button(
-         actionID, 'getViafByGnd',
-         showIcon, true
-)*/
-;
-}
-idno[type=gnd]:after{
-display: block;
-	content: oxy_browser(
-            href, 
-      oxy_url('http://d-nb.info/gnd/', oxy_xpath("//idno[@type='gnd']/string()")), 
-            width, 100%,
-            height, 80%
-    );
-}
-idno[type=viaf]:before{
-	content: oxy_label(text, "VIAF", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-idno[type=viaf]:after{
-display: block;
-	content: oxy_browser(
-            href, 
-      oxy_url('http://viaf.org/viaf/', oxy_xpath("//idno[@type='viaf']/string()")), 
-            width, 100%,
-            height, 80%
-    );
-}
-note:before{
-	content: oxy_label(text, "Anmerkungen", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-
-location > placeName:before{
-      content: oxy_label(text, "Ggf. Name der Örtlichkeit", width, 30px, styles,"font-weight:bold;color:black;")
-      oxy_textfield(columns, 20, edit, "#text", "true");
-      }
-placeName:before{
-  content: oxy_label(text, "Name des Ortes", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 20, edit, "#text", "true")
-      oxy_combobox(
-            edit, "@key", 
+editor > persName{
+display:block;
+  content: oxy_label(text, "Herausgeber:", width, 20%)
+  oxy_textfield(edit, '#text', columns, 20)
+           oxy_combobox( 
+            edit, '@auth',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
-            '\A'
-      oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@when-custom")
-oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@from-custom")
- oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@to-custom")
-oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notBefore-custom")
-oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notAfter-custom");
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
-placeName{
-    color: #bac945;
-}
-location:before{
-content: oxy_label(text, "Örtlichkeit", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-street:before{
-  content: oxy_label(text, "Straße", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-num:before{
-  color: #bac945;
-padding: 10px 10px 10px 10px;
-  content: oxy_label(text, "Nr.", width, 5px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 5, edit, "#text", "true");
-}
-postCode:before{
-  content: oxy_label(text, "Postleitzahl", width, 10px, styles,
-      "font-weight:bold;color:black;");
-}
-geogName:before{
-	content: oxy_label(text, "Geographischer Name", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-
-settlement:before{
-	content: oxy_label(text, "Stadt", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 20, edit, "#text", "true");
-}
-settlement{
-/*color: #bac945;
-padding: 10px 10px 10px 10px;*/
-    content: oxy_combobox(
-            edit, "@key", 
+lyricist > persName{
+display:block;
+  content:
+        oxy_label(text, "Textdichter:", width, 20%)
+        oxy_textfield(edit, '#text', columns, 20)
+        oxy_combobox( 
+            edit, '@auth',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
-            ;
-}
-region:before{
-	content: oxy_label(text, "Region", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-country:before{
-	content: oxy_label(text, "Land", width, 30px, styles,
-      "font-weight:bold;color:black;");
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
 
-country{
-    content: oxy_combobox(
-            edit, "@key", 
+respStmt{
+display:block;
+  content:oxy_label(text, "Widmungsvermerk:", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 30)
+}
+
+physDesc{
+  display:block;
+  background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3.2 Physikalische Beschreibung der Quelle";
+    padding-left:5px;
+}
+
+titlePage{
+  display:block;
+  content:oxy_label(text, "Titelseite:", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 60)
+}
+
+dimensions{
+  display:  block;
+  content:  oxy_label(text, "Abmessungen:", width, 20%)
+            oxy_combobox( 
+            edit, '@label',
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='country'],', ')"));
-
-}
-
-orgName:before{
-	content: oxy_label(text, "Name der Institution", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-
-orgName{
-    color: #bac945;
-    content: 
-      oxy_textfield(columns, 20, edit, "#text", "true")
-      oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@when-custom")
-oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@from-custom")
- oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@to-custom")
-oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notBefore-custom")
-oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notAfter-custom");
-}
-
-desc > date:before{
-	content: oxy_label(text, "Datum", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-desc > date{
-    content: 'notBefore: ' attr(notBefore) ' | notAfter: 'attr(notAfter);
-}
-
-/**:focus {
-  border: 3px solid #555;
-}*/
-
-event:before{
-	content: oxy_label(text, "Event", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_action(
-                 name, 'Event validieren',
-                 operation, 'ro.sync.ecss.extensions.commons.operations.ChangeAttributesOperation',
-                 arg-elementLocations, './tei:desc/*',
-                 arg-attributeNames, 'xmlns',
-                 arg-values, '',
-                 arg-removeIfEmpty, 'true'
-                 );
-}
-
-event > label:before{
-	content: oxy_label(text, "Name des Events", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-
-event > label{
-    content: oxy_textfield(columns, 20, edit, "#text", "true");
-}
-event > desc:before{
-	content: oxy_label(text, "Beschreibung", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textArea(
-      edit, '#content',
-      contentType, 'text/xml',
-      rows, 10,
-      columns, 60);
-}
-
-event > desc > date{
-    content: oxy_label(text, "\A Aktion:", width, 20px, styles, "font-weight:normal;color:black;")
-    oxy_combobox(
-            edit, "@type", 
+            values, 'height, width',
+            labels, 'Höhe,Breite')
+            oxy_combobox( 
+            edit, '@unit',
             editable, false,
-            values, ' ,established, closed, renamed',
-            labels, ' ,gegründet, aufgegeben, umbenannt')
-    oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@when-custom")
-oxy_label(text, "\A Von:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@from-custom")
- oxy_label(text, "\A Bis:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@to-custom")
-oxy_label(text, "\A Nicht vor:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notBefore-custom")
-oxy_label(text, "\A Nicht nach:", width, 20px, styles, "font-weight:normal;color:black;")
- oxy_textfield(columns, 12, edit, "@notAfter-custom")
- ;
+            values, 'mm, cm',
+            labels, 'mm, cm')
+            oxy_textfield(edit, '#text', columns, 5)
 
 }
 
-note{
-    content: oxy_textArea(
-      edit, '#content',
-      contentType, 'text/xml',
-      rows, 10,
-      columns, 60
-      );
+extent[label=pages], extent[label=folium]{
+  display:  block;
+  content:  oxy_label(text, "Umfang:", width, 20%)
+            oxy_combobox( 
+            edit, '@label',
+            editable, false,
+            values, 'orientation, folium, pages, pagination',
+            labels, 'Ausrichtung, Folii, Seiten, Seitenzählung')
+            oxy_combobox( 
+            edit, '@unit',
+            editable, false,
+            values, 'folium, page',
+            labels, 'Folio, Seite')
+            oxy_textfield(edit, '#text', columns, 5)
 }
-/*
-taxonomy > desc{
-/\*display:inline-block;*\/
-content: oxy_label(text, "Taxonomie:", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 40, edit, "#text", "true");
-}
-
-category{
-content: oxy_label(text, "Kategorie", width, 30px, styles,
-      "font-weight:bold;color:black;") '\A'
-      oxy_label(text, "ID:", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 10, edit, "@xml:id", "true")
-      ;
-}
-
-category > desc:before{
-content: oxy_label(text, "Sprache:", width, 30px, styles,
-      "font-weight:bold;color:black;");
-}
-
-category > desc{
-content: oxy_checkbox(
-        edit, '@xml:lang',
-        values, "de",
-        uncheckedValues, '',
-        labels, 'deutsch')
-        oxy_checkbox(
-        edit, '@xml:lang',
-        values, "en",
-        uncheckedValues, '',
-        labels, 'englisch');
+extent[label=pagination]{
+  display:  block;
+  content:  oxy_label(text, "Seitenzählung:", width, 20%)
+            oxy_combobox( 
+            edit, '@label',
+            editable, false,
+            values, 'orientation, folium, pages, pagination',
+            labels, 'Ausrichtung, Folii, Seiten, Seitenzählung')
+            oxy_combobox( 
+            edit, '#text',
+            editable, false,
+            values, 'none,arabic,roman,irregular',
+            labels, 'keine, arabisch, römisch, unregelmäßig')
 }
 
-category > desc > name{
-content: oxy_label(text, "Typ:", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 10, edit, "@type", "true")
-      '\A'
-      oxy_label(text, "Name:", width, 30px, styles,
-      "font-weight:bold;color:black;")
-      oxy_textfield(columns, 20, edit, "#text", "true");
+extent[label=orientation]{
+  display:  block;
+  content:  oxy_label(text, "Ausrichtung:", width, 20%)
+            oxy_combobox( 
+            edit, '@label',
+            editable, false,
+            values, 'orientation, folium, pages, pagination',
+            labels, 'Ausrichtung, Folii, Seiten, Seitenzählung')
+            oxy_combobox( 
+            edit, '#text',
+            editable, false,
+            values, 'portrait, landscape',
+            labels, 'Hochformat, Querformat')
 }
-*/
+
+scoreFormat{
+  display:  block;
+  content:  oxy_label(text, "Partiturformat:", width, 20%)
+            oxy_combobox( 
+            edit, '#text',
+            editable, false,
+            values, 'song score, choir score, orchestral score, piano score',
+            labels, 'Liedpartitur, Chorpartitur, Orchesterpartitur, Klavierauszug')
+}
+handList{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Hände";
+    padding-left:5px;
+}
+
+/*						<hand label="N 1r" medium="Bleistift">nach A-dur transponieren</hand>*/
+/*						<hand label="NW 1v BiblVermerk" medium="Bleistift">12</hand>*/
+hand {
+  display:block;
+  content:  oxy_label(text, "Hand", width, 7%)
+            oxy_textfield(edit, '@label', columns, 20)
+            oxy_combobox( 
+            edit, '@medium',
+            editable, false,
+            values, 'Bleistift,TinteSchwarz,TinteBlau,TinteRot,FarbstiftBlau,FarbstiftRot,FarbstiftGrün,',
+            labels, 'Bleistift,TinteSchwarz,TinteBlau,TinteRot,FarbstiftBlau,FarbstiftRot,FarbstiftGrün,')
+            oxy_textfield(edit, '#text', columns, 20)
+}
+
+condition:before{
+  display:block;
+  content:oxy_label(text, "Zustand der Quelle", width, 20%)
+  oxy_combobox( 
+            width, 20%,
+            edit, '@type',
+            editable, false,
+            values, 'desc',
+            labels, 'Beschreibung')
+            'Nr.'
+            oxy_textfield(edit, '@n', columns, 5)
+            'von'
+  oxy_combobox( 
+            width, 20%,
+            edit, '@resp',
+            editable, false,
+            values, 'dried',
+            labels, 'Dennis Ried')
+}
+condition{display:block;
+          content: 
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 60)}
+
+physMedium{
+display:block;
+  content:oxy_label(text, "Beschreibung des Mediums:", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 5,
+          columns, 44)
+}
+
+physLoc{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Bestandshaltende Institution";
+    padding-left:5px;
+}
+
+repository{
+display:block;
+  content:oxy_label(text, "Sammlung:", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 5,
+          columns, 44)
+}
+
+creation{display:block;
+    border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Entstehung:", width, 20%)
+          oxy_textArea(
+          edit, '#text',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 44)
+           
+}
+history{display:block;
+    border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Geschichte:", width, 20%)
+          oxy_textArea(
+          edit, '#text',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 44)
+           
+}
+
+langUsage{display:block;
+    border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Benutzte Sprachen:", width, 20%)
+}
+
+language{
+  content:oxy_checkbox(edit, '@auth', values, 'de,en,fr,it', labels, 'deutsch,englisch,französisch,italienisch');
+}
+
+/* Hier fehlt noch etwas */
+
+relationList{
+  display:block;
+    border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Beziehungen zu anderen Quellen:", width, 20%)
+}
+
+relation{
+display:block;
+  content:  oxy_combobox( 
+            width, 40%,
+            edit, '@target',
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;sort=a;recurse=yes')/mei:mei/@xml:id,', ')"),
+            labels,
+oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;sort=a;recurse=yes')/mei:mei//mei:title[@type='uniform'][1]/concat(normalize-space(mei:titlePart[@type='main']),' (',ancestor::mei:mei/@xml:id,')'),', ')"))
+            oxy_combobox( 
+            width, 20%,
+            edit, '@rel',
+            editable, false,
+            values, 'isEmbodimentOf,hasAlternate',
+            labels, 'isEmbodimentOf,hasAlternate');
+}
+mdiv:before {
+    display:block;
+    background-color:rgb(200, 200, 200);
+    border:1px solid black;
+    content: "Part X. Musikalischer Inhalt";
+    padding-left:5px;
+}
+
+div[type=songtext]{
+  display:block;
+  border:1px solid black;
+  padding-left:5px;
+  content: "Part X.2 Liedtext";
+}
+
+lg{
+  display:block;
+  border:1px solid black;
+  padding-left:5px;
+  content:oxy_label(text, "Strophe", width, 5%)
+  oxy_textfield(edit, '@n', columns, 4)
+}
+l{
+  display:block;
+  content:oxy_label(text, "Vers", width, 5%)
+  oxy_textfield(edit, '@n', columns, 5)
+  oxy_textfield(edit, '#text', columns, 45)
+}
+head{
+  display:block;
+  border:1px solid black;
+  padding-left:5px;
+  content:oxy_label(text, "Titel", width, 5%)
+  oxy_textfield(edit, '#text', columns, 50)
+}
