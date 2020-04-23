@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<criticalReport work="" xmlns="http://www.baumann-digital.de/ns/criticalReport">
-<remark xml:id="">
-  <item category=""></item>
-  <mdiv></mdiv>
-  <measureStart></measureStart>
-  <countTimeStart></countTimeStart>
-  <measureEnd></measureEnd>
-  <countTimeEnd></countTimeEnd>
-  <layer></layer>
-  <voice></voice>
-  <note></note>
-  <note type="intern"></note>
-  <sources></sources>
-</remark>  
+<criticalReport work="lkj" xmlns="http://www.baumann-digital.de/ns/criticalReport">
+<remark xml:id="fghjkl" type="editorial">
+    <item category="Notentext"/>
+    <mdiv>8</mdiv>
+    <measureStart>9</measureStart>
+    <countTimeStart/>
+    <measureEnd/>
+    <countTimeEnd/>
+    <layer/>
+    <voice/>
+    <note/>
+    <note type="intern"/>
+    <sources/>
+  </remark>  
 </criticalReport>
