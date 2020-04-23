@@ -1,15 +1,6 @@
 *{display:block;
 border: 1px solid #cccccc;}
 
-*{
-  color:white;
-}
-
-*:before {
-color:black;
-}
-
-
 criticalReport:before {
   content: 'Werk: ' oxy_xpath("doc(concat('../',@work,'.xml'))//mei:work/mei:title[1]/string()") ' – ' oxy_xpath('count(//remark)') ' Anmerkungen' '\A WerkID: ' attr(work);
   font-weight: bold
@@ -46,6 +37,7 @@ measureStart:before {
 
 measureStart{
   content:oxy_textfield(columns, 5, edit, "#text", "true");
+  visibility:-oxy-collapse-text;
 }
 measureEnd:before {
   content: 'Endtakt: '
@@ -53,6 +45,7 @@ measureEnd:before {
 }
 measureEnd{
   content:oxy_textfield(columns, 5, edit, "#text", "true");
+  visibility:-oxy-collapse-text;
 }
 
 countTimeStart:before {
@@ -60,10 +53,14 @@ countTimeStart:before {
 }
 countTimeStart{
   content:oxy_textfield(columns, 3, edit, "#text", "true");
+  visibility:-oxy-collapse-text;
 }
 countTimeEnd:before {
-color:black;
-  content: 'Endzählzeit: ' oxy_textfield(columns, 3, edit, "#text", "true");
+  content: 'Endzählzeit: '}
+
+countTimeEnd {
+  content: oxy_textfield(columns, 3, edit, "#text", "true");
+  visibility:-oxy-collapse-text;
 }
 
 layer:before {
@@ -117,6 +114,18 @@ layer:before {
            edit, '@oboeII',
            values, 'true',
            labels, 'Ob2')
+            oxy_checkbox(
+           edit, '@clarinet',
+           values, 'true',
+           labels, 'Klar')
+           oxy_checkbox(
+           edit, '@clarinetI',
+           values, 'true',
+           labels, 'Klar1')
+           oxy_checkbox(
+           edit, '@clarinetII',
+           values, 'true',
+           labels, 'Klar2')
            '\A'
            oxy_checkbox(
            edit, '@violin',
@@ -303,11 +312,15 @@ item:before {
   content: 'Kategorie: 'oxy_combobox( 
             edit, '@category',
             editable, false,
-            values, 'Notentext, Tondauer, Bogensetzung, Dynamik, Halsung, Artikulation, Vortagsbezeichnung, Tempoangabe, Metrum, Pausensetzung,Bemerkung,Beschreibung,Streichung,Sonstige')
+            values, 'Notentext, Tondauer, Bogensetzung, Dynamik, Halsung, Balkung, Artikulation, Vortagsbezeichnung, Tempoangabe, Metrum, Pausensetzung,Bemerkung,Beschreibung,Streichung,Sonstige')
 }
 
 mdiv:before{
-  content: 'Satz: 'oxy_textfield(columns, 3, edit, "#text", "true");
+  content: 'Satz: '}
+
+mdiv{
+  content: oxy_textfield(columns, 3, edit, "#text", "true");
+  visibility:-oxy-collapse-text;
 }
 
 note:before {
@@ -318,7 +331,8 @@ note{
           edit, '#text',
           contentType, 'text',
           rows, 5,
-          columns, 60)
+          columns, 60);
+  visibility:-oxy-collapse-text;
 }
 
 note[type='intern']:before {
@@ -329,7 +343,8 @@ note[type='intern']{
           edit, '#text',
           contentType, 'text',
           rows, 3,
-          columns, 50)
+          columns, 50);
+  visibility:-oxy-collapse-text;
 }
 
 sources:before {
