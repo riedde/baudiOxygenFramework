@@ -92,6 +92,21 @@
               </attribute>
             </optional>
             <optional>
+              <attribute name="clarinet">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="clarinetI">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="clarinetII">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
               <attribute name="corno">
                 <data type="boolean"/>
               </attribute>
