@@ -1,3 +1,15 @@
+@namespace oxy url('http://www.oxygenxml.com/extensions/author');
+oxy|comment {
+    display:block !important;
+    color:green !important;
+    background-color:transparent !important;
+}
+oxy|comment:before{
+  font-weight:bold;
+  content: oxy_label(text, "Hinweis: ", width, 5%);
+  padding-left:10px;
+}
+
 mei{
   display:block;
   background-color:rgb(240, 240, 240);
@@ -22,7 +34,8 @@ revisionDesc,
 biblList,
 facsimile,
 scoreDef,
-section
+section,
+extMeta > *
 {display:none !important;
 visibility:-oxy-collapse-text;
 }
@@ -42,6 +55,7 @@ physMedium,
 physLoc > *,
 creation >*,
 history >*,
+term,
 l
 {visibility:-oxy-collapse-text;
  display:block;}
@@ -57,16 +71,19 @@ fileDesc:before {
 fileDesc{}
 
 titlePart[type=main]:before {
+padding-left:5px;
     content:
     oxy_label(text, "Titel", width, 20%) 
         oxy_textfield(edit, '#text', columns, 10)
 }
-titlePart[type=sub]:before {
+titlePart[type=subordinate]:before {
+padding-left:5px;
     content:
     oxy_label(text, "Untertitel", width, 20%) 
         oxy_textfield(edit, '#text', columns, 30)
 }
 titlePart[type=desc]:before {
+padding-left:5px;
     content:
     oxy_label(text, "Beschreibung", width, 20%) 
         oxy_textfield(edit, '#text', columns, 30)
@@ -79,14 +96,16 @@ work:before {
     content: "Teil 2. Informationen zum Werk";
     padding-left:5px;
 }
-
-work > title{
-display:block;
-  content:
-    oxy_label(text, "Titel (Dipl.)", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 30)
+work > title:before{
+  display:block;
+  background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 2.1 Allgemein";
+    padding-left:5px;
 }
+
 key {
+padding-left:5px;
 display:block;
   content: oxy_label(text, "Tonart:", width, 20%)
   oxy_combobox( 
@@ -98,8 +117,8 @@ display:block;
 oxy_combobox( 
             edit, '@accid',
             editable, false,
-            values, 's,ss,f,ff',
-            labels, '#,x,b,bb'
+            values, ',s,f,ss,ff,n',
+            labels, ',\266F,\266D,\2715,\266D\266D,\266E'
 )
 oxy_combobox( 
             edit, '@mode',
@@ -111,6 +130,7 @@ oxy_combobox(
 }
 
 meter{
+padding-left:5px;
 display:block;
   content: oxy_label(text, "Taktangabe:", width, 20%)
   oxy_combobox( 
@@ -134,6 +154,7 @@ oxy_combobox(
 }
 
 tempo{
+padding-left:5px;
 display:block;
   content:
     oxy_label(text, "Tempoangabe:", width, 20%) 
@@ -147,11 +168,11 @@ perfMedium:before{
     content: "Teil 2.2 Besetzung";
     padding-left:5px;
 }
-
 perfResList {
   display:block;
 }
 perfRes{
+padding-left:5px;
 display:block;
 border:1px solid black;
   padding-left:5px;
@@ -184,18 +205,24 @@ border:1px solid black;
 
 manifestationList:before{
   display:block;
-    background-color:rgb(230, 230, 230);
+    background-color:rgb(200, 200, 200);
     border:1px solid black;
-    content: "Teil 3 Beschreibung der Quelle (Dipolomatisch)";
+    content: "Teil 3 Beschreibung der Quelle(n) (Dipolomatisch)";
     padding-left:5px;
+    counter-reset: manifestationCounter;
 }
-
+manifestation:before {
+counter-increment: manifestationCounter;
+  display:block;
+  background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)" Quelle "counter(manifestationCounter);
+}
 manifestation {
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3.1 Allgemeine Beschreibung";
-    padding-left:5px;
+    content: "Teil 3."counter(manifestationCounter)".1 Allgemeine Beschreibung";
 }
 identifier{
 display:block;
@@ -289,14 +316,16 @@ display:block;
           columns, 30)
 }
 
-physDesc{
+physDesc:before{
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3.2 Physikalische Beschreibung der Quelle";
-    padding-left:5px;
+    content: "Teil 3."counter(manifestationCounter)".2 Physikalische Beschreibung der Quelle";
 }
-
+physDesc{
+  display:block;
+    border:1px solid black;
+}
 titlePage{
   display:block;
   content:oxy_label(text, "Titelseite:", width, 20%)
@@ -429,20 +458,72 @@ condition{display:block;
 
 physMedium{
 display:block;
-  content:oxy_label(text, "Beschreibung des Mediums:", width, 20%)
+  content:oxy_label(text, "Medien:", width, 20%)
           oxy_textArea(
           edit, '#content',
           contentType, 'text/xml',
           rows, 5,
           columns, 44)
 }
-
-physLoc{
+locus{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Bestandshaltende Institution";
-    padding-left:5px;
+    content:oxy_label(text, "Vermerke", width, 20%)
+    oxy_combobox( 
+           width, 30%,
+           edit, '@type',
+           editable, false,
+           values, 'paperNotes, biblNotes, stamps',
+           labels, 'Papiervermerke, Bibliothekarische Vermerke, Stempel')
+}
+
+locus > rend{
+display:block;
+  content: 
+  oxy_label(text, "Rendition:", width, 20%)
+  "\2194" oxy_combobox( 
+           width, 20%,
+           edit, '@halign',
+           editable, false,
+           values, 'left, center, right',
+           labels, 'links, zentriert, rechts')
+  "\2195" oxy_combobox( 
+           width, 20%,
+           edit, '@valign',
+           editable, false,
+           values, 'top, middle, bottom',
+           labels, 'oben, mittig, unten')
+}
+locus[type=paperNotes] > symbol{
+display:block;
+  content: oxy_label(text, "Symbol:", width, 20%)
+  oxy_combobox( 
+           width, 40%,
+           edit, '@class',
+           editable, false,
+           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/@xml:id,', ')")
+           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/string(),', ')") )
+}
+locus[type=stamps] > symbol{
+display:block;
+  content: oxy_label(text, "Symbol:", width, 20%)
+  oxy_combobox( 
+           width, 40%,
+           edit, '@class',
+           editable, false,
+           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/@xml:id,', ')")
+           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/string(),', ')") )
+}
+physLoc:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".3 Bestandshaltende Institution";
+}
+physLoc{
+  display:block;
+    border:1px solid black;
 }
 
 repository{
@@ -455,9 +536,14 @@ display:block;
           columns, 44)
 }
 
+creation:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".4 Zur Entstehung der Quelle";
+}
 creation{display:block;
     border:1px solid black;
-    padding-left:5px;
           content:oxy_label(text, "Entstehung:", width, 20%)
           oxy_textArea(
           edit, '#text',
@@ -466,9 +552,14 @@ creation{display:block;
           columns, 44)
            
 }
+history:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".5 Zur Geschichte der Quelle";
+}
 history{display:block;
     border:1px solid black;
-    padding-left:5px;
           content:oxy_label(text, "Geschichte:", width, 20%)
           oxy_textArea(
           edit, '#text',
@@ -478,9 +569,14 @@ history{display:block;
            
 }
 
+langUsage:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".6 Sprachen";
+}
 langUsage{display:block;
     border:1px solid black;
-    padding-left:5px;
           content:oxy_label(text, "Benutzte Sprachen:", width, 20%)
 }
 
@@ -488,30 +584,126 @@ language{
   content:oxy_checkbox(edit, '@auth', values, 'de,en,fr,it', labels, 'deutsch,englisch,französisch,italienisch');
 }
 
-/* Hier fehlt noch etwas */
+notesStmt:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".7 Annotationen";
+    counter-reset: annots;
+    
+}
+annot:before{
+counter-increment:annots;
+content:counter(annots)". "
+}
+annot{display:block;
+    border:1px solid black;
+          content:oxy_label(text, "Anmerkung:", width, 13%)
+          oxy_datePicker(edit, '@when', columns, 15, format, 'yyyy-MM-dd')
+          oxy_combobox( 
+            width, 20%
+            edit, '@resp',
+            editable, false,
+            values, 'dried',
+            labels, 'Dennis Ried'
+)
 
-relationList{
+}
+
+classification{
+  display:block;
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".8 Klassifikationen";
+}
+termList:before{
   display:block;
     border:1px solid black;
     padding-left:5px;
-          content:oxy_label(text, "Beziehungen zu anderen Quellen:", width, 20%)
+          content:oxy_label(text, "Tags:", width, 20%)
 }
 
-relation{
+term{
 display:block;
-  content:  oxy_combobox( 
-            width, 40%,
+  content:oxy_label(text, "Tag:", width, 5%)
+          oxy_combobox( 
+            width, 20%
+            edit, '@type',
+            editable, true)
+          oxy_combobox( 
+            width, 20%
+            edit, '#text',
+            editable, true)
+}
+ptr{
+  display:inline-block;
+  content:oxy_label(text, "Pointer")
+  oxy_combobox( 
+            width, 25%,
             edit, '@target',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;sort=a;recurse=yes')/mei:mei/@xml:id,', ')"),
-            labels,
-oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;sort=a;recurse=yes')/mei:mei//mei:title[@type='uniform'][1]/concat(normalize-space(mei:titlePart[@type='main']),' (',ancestor::mei:mei/@xml:id,')'),', ')"))
-            oxy_combobox( 
+            values, oxy_xpath("string-join(ancestor::mei//@xml:id/concat('#',.),', ')"),
+            labels, oxy_xpath("string-join(ancestor::mei//@xml:id,', ')")
+)
+}
+relationList:before{
+  display:block;
+    border:1px solid black;
+    padding-left:5px;
+          content:oxy_label(text, "Beziehungen zu anderen Werken/Quellen:", width, 20%)
+}
+
+relation:before{
+  content: oxy_combobox( 
             width, 20%,
             edit, '@rel',
             editable, false,
             values, 'isEmbodimentOf,hasAlternate',
-            labels, 'isEmbodimentOf,hasAlternate');
+            labels, 'Ist Verkörperung von,hat Alternative')
+}
+relation[rel=hasAlternate]{
+display:block;
+-oxy-link:attr(target);
+content:
+  oxy_combobox( 
+            width, 40%,
+            edit, '@target',
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
+            , labels,
+oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
+)
+;
+}
+
+relation[rel=isEmbodimentOf]{
+display:block;
+  content:  
+  oxy_combobox( 
+            width, 40%,
+            edit, '@target',
+            editable, false,
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
+            , labels,
+oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
+);
+}
+
+extMeta:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Teil 3."counter(manifestationCounter)".9 extMeta (TEI)";
+}
+extMeta{
+  display:block;
+    border:1px solid black;
+          content:
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 60)
+           
 }
 mdiv:before {
     display:block;
@@ -526,25 +718,35 @@ div[type=songtext]{
   border:1px solid black;
   padding-left:5px;
   content: "Part X.2 Liedtext";
+  counter-reset:stanza;
 }
-
+lg:before{
+counter-increment:stanza;
+content:counter(stanza)". "
+}
 lg{
   display:block;
   border:1px solid black;
   padding-left:5px;
-  content:oxy_label(text, "Strophe", width, 5%)
-  oxy_textfield(edit, '@n', columns, 4)
+  content:oxy_label(text, "Strophe", width, 5%);
+  counter-reset:verse
+}
+l:before{
+counter-increment:verse;
+content:counter(verse);
+display:none
 }
 l{
   display:block;
-  content:oxy_label(text, "Vers", width, 5%)
-  oxy_textfield(edit, '@n', columns, 5)
+  content:
+  oxy_label(text, "Vers", width, 5%)
+  counter(verse)
   oxy_textfield(edit, '#text', columns, 45)
 }
 head{
   display:block;
   border:1px solid black;
   padding-left:5px;
-  content:oxy_label(text, "Titel", width, 5%)
-  oxy_textfield(edit, '#text', columns, 50)
+  content:oxy_label(text, "Titel", width, 6%)
+  oxy_textfield(edit, '#text', columns, 45)
 }
