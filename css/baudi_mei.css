@@ -56,6 +56,7 @@ physLoc > *,
 creation >*,
 history >*,
 term,
+head,
 l
 {visibility:-oxy-collapse-text;
  display:block;}
@@ -261,10 +262,33 @@ title[type=desc]:before {
     oxy_label(text, "Beschreibung", width, 20%) 
         oxy_textfield(edit, '#text', columns, 30)
 }
-composer > persName{
+composer:before{
 display:block;
   content:
     oxy_label(text, "Komponist:", width, 20%) 
+    oxy_button(action, oxy_action(
+          name, 'persName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<persName xmlns="http://www.music-encoding.org/ns/mei"></persName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+oxy_button(action, oxy_action(
+          name, 'corpName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<corpName xmlns="http://www.music-encoding.org/ns/mei"></corpName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+}
+composer > persName{
+display:block;
+padding-left:5%;
+  content:
         oxy_combobox(
         width, 20%,
             edit, '#text',
@@ -279,11 +303,35 @@ display:block;
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
+
+arranger:before{
+display:block;
+  content:
+    oxy_label(text, "Bearbeiter:", width, 20%) 
+    oxy_button(action, oxy_action(
+          name, 'persName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<persName xmlns="http://www.music-encoding.org/ns/mei"></persName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+oxy_button(action, oxy_action(
+          name, 'corpName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<corpName xmlns="http://www.music-encoding.org/ns/mei"></corpName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+}
 arranger > persName
 {
 display:block; 
+padding-left:5%;
  content:
-    oxy_label(text, "Bearbeiter:", width, 30%) 
         oxy_textfield(edit, '#text', columns, 20)
         oxy_combobox( 
             edit, '@auth',
@@ -292,10 +340,30 @@ display:block;
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
+funder:before{display:block;
+  content:oxy_label(text, "Auftraggeber:", width, 20%)
+  oxy_button(action, oxy_action(
+          name, 'persName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<persName xmlns="http://www.music-encoding.org/ns/mei"></persName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+oxy_button(action, oxy_action(
+          name, 'corpName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<corpName xmlns="http://www.music-encoding.org/ns/mei"></corpName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))}
 funder > persName{
 display:block;
+padding-left:5%;
   content:
-    oxy_label(text, "Auftraggeber:", width, 20%) 
         oxy_combobox(
         width, 20%,
             edit, '#text',
@@ -313,7 +381,6 @@ display:block;
 funder > corpName{
 display:block;
   content:
-    oxy_label(text, "Auftraggeber:", width, 20%) 
         oxy_combobox(
         width, 40%,
             edit, '#text',
@@ -329,9 +396,33 @@ display:block;
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }
+editor:before{
+display:block;
+  content:
+    oxy_label(text, "Herausgeber:", width, 20%) 
+    oxy_button(action, oxy_action(
+          name, 'persName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<persName xmlns="http://www.music-encoding.org/ns/mei"></persName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+oxy_button(action, oxy_action(
+          name, 'corpName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<corpName xmlns="http://www.music-encoding.org/ns/mei"></corpName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+}
 editor > persName{
 display:block;
-  content: oxy_label(text, "Herausgeber:", width, 20%)
+padding-left:5%;
+  content:
   oxy_textfield(edit, '#text', columns, 20)
            oxy_combobox( 
             edit, '@auth',
@@ -340,10 +431,33 @@ display:block;
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
-lyricist > persName{
+lyricist:before{
 display:block;
   content:
-        oxy_label(text, "Textdichter:", width, 20%)
+    oxy_label(text, "Textdichter:", width, 20%) 
+    oxy_button(action, oxy_action(
+          name, 'persName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<persName xmlns="http://www.music-encoding.org/ns/mei"></persName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+oxy_button(action, oxy_action(
+          name, 'corpName', 
+          description, 'Insert an element after the current one', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<corpName xmlns="http://www.music-encoding.org/ns/mei"></corpName>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+))
+}
+lyricist > persName{
+display:block;
+padding-left:5%;
+  content:
         oxy_textfield(edit, '#text', columns, 20)
         oxy_combobox( 
             edit, '@auth',

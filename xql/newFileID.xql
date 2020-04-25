@@ -13,6 +13,8 @@ declare namespace saxon = "http://saxon.sf.net/";
 let $doc := ./root()/node()
 let $id := uuid:randomUUID()
 
+let $fileIDbefore := $doc/@xml:id
+let $workID as xs:string := concat('baudi-02-', substring(fn:string($id), 1, 8))
 let $persID as xs:string := concat('baudi-04-', substring(fn:string($id), 1, 8))
 let $orgID as xs:string := concat('baudi-05-', substring(fn:string($id), 1, 8))
 let $placeID as xs:string := concat('baudi-06-', substring(fn:string($id), 1, 8))
@@ -23,7 +25,17 @@ let $newID := if (string(node-name($doc)) = 'person')
               then ($orgID)
               else if (string(node-name($doc)) ='place')
               then ($placeID)
+              else if (string(node-name($doc)) ='work')
+              then ($workID)
               else ()
 
 return
-    replace value of node $doc/@xml:id with $newID
+    (
+        if(string(node-name($doc)) ='work')
+        then(for $ID in $doc//@xml:id[contains(.,$fileIDbefore)]
+                let $IDending := substring($ID,18)
+                let $IDrenewed := concat($workID,$IDending)
+                return
+                    replace value of node $ID with $IDrenewed)
+        else(replace value of node $fileIDbefore with $newID)
+    )

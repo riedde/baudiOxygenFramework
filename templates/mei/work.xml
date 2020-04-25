@@ -1,0 +1,42 @@
+<work xmlns="http://www.music-encoding.org/ns/mei" xml:id="baudi-02-325d576f">
+    <title type="uniform" xml:id="baudi-02-325d576f-title">
+        <titlePart type="main" xml:id="baudi-02-325d576f-titleMain"/>
+        <titlePart type="subordinate" xml:id="baudi-02-325d576f-titleSub"/>
+        <titlePart type="desc" xml:id="baudi-02-325d576f-titleDesc"/>
+    </title>
+    <composer xml:id="baudi-02-325d576f-composer">
+        <persName auth="baudi-04-5e3ed698">Ludwig Baumann</persName>
+    </composer>
+    <arranger/>
+    <lyricist xml:id="baudi-02-325d576f-lyricist"/>
+    <editor/>
+    <funder/>
+    <key/>
+    <meter/>
+    <tempo/>
+    <incip/>
+    <creation/>
+    <history/>
+    <langUsage>
+        <head>In der Quelle verwendete Sprache(n)</head>
+        <language/>
+    </langUsage>
+    <perfMedium>
+        <perfResList/>
+    </perfMedium>
+    <audience/>
+    <contents>
+        <contentItem/>
+    </contents>
+    <context/>
+    <classification>
+        <head/>
+        <termList>
+            <term type="workGroup"/>
+            <term type="genre"/>
+        </termList>
+    </classification>
+    <relationList>
+        <relation/>
+    </relationList>
+</work>
