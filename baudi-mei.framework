@@ -376,7 +376,7 @@
 									<String>http://www.music-encoding.org/ns/mei</String>
 								</field>
 								<field name="rootElem">
-									<String>mei</String>
+									<String>mei, work</String>
 								</field>
 								<field name="fileName">
 									<String>*</String>

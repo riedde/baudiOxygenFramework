@@ -29,7 +29,7 @@ condition > *,
 repository >*,
 creation >*,
 history >*,
-contents > *,
+contents > *:not(contentItem),
 revisionDesc,
 biblList,
 facsimile,
@@ -93,14 +93,18 @@ work:before {
     display:block;
     background-color:rgb(200, 200, 200);
     border:1px solid black;
-    content: "Teil 2. Informationen zum Werk";
+    content: "Metadaten zum Werk";
     padding-left:5px;
+}
+work {
+    display:block;
+    border:1px solid black;
 }
 work > title:before{
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 2.1 Allgemein";
+    content: "Allgemein";
     padding-left:5px;
 }
 
@@ -111,7 +115,7 @@ display:block;
   oxy_combobox( 
             edit, '@pname',
             editable, false,
-            values, 'c,d,e,f,g,a,h',
+            values, 'c,d,e,f,g,a,b',
             labels, 'C,D,E,F,G,A,H'
 )
 oxy_combobox( 
@@ -133,19 +137,22 @@ meter{
 padding-left:5px;
 display:block;
   content: oxy_label(text, "Taktangabe:", width, 20%)
-  oxy_combobox( 
+  oxy_combobox(
+            width, 10%,
             edit, '@count',
-            editable, true,
+            editable, false,
             values, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16',
             labels, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16'
 )
 oxy_combobox( 
+            width, 10%,
             edit, '@unit',
             editable, false,
             values, '1,2,4,8,16,32',
             labels, '1,2,4,8,16,32'
 )
 oxy_combobox( 
+            width, 25%,
             edit, '@sym',
             editable, false,
             values, 'common,cut',
@@ -165,7 +172,7 @@ perfMedium:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 2.2 Besetzung";
+    content: "Zur Besetzung";
     padding-left:5px;
 }
 perfResList {
@@ -187,27 +194,29 @@ content:oxy_label(text, "Instrumentenangabe (Dipl.):", width, 20%)
         oxy_combobox( 
             edit, '@auth',
             editable, false,
-            values, '',
-            labels, '')
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
+           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
 }
 
+contents:before{
+    display:block;
+    background-color:rgb(200, 200, 200);
+border:1px solid black;
+              content:oxy_label(text, "Inhaltsverzeichnis", width, 20%)
+}
 contents{display:block;
 border:1px solid black;
-    padding-left:5px;
-          content:oxy_label(text, "Inhalt (content):", width, 20%)
-          oxy_textArea(
-          edit, '#content',
-          contentType, 'text/xml',
-          rows, 10,
-          columns, 44)
-           
+}
+contentItem{
+    display:block;
+    content:oxy_label(text, " • ", width, 3%)            oxy_textfield(edit, '#text', columns, 47)
 }
 
 manifestationList:before{
   display:block;
     background-color:rgb(200, 200, 200);
     border:1px solid black;
-    content: "Teil 3 Beschreibung der Quelle(n) (Dipolomatisch)";
+    content: "Beschreibung der Quelle(n) (Dipolomatisch)";
     padding-left:5px;
     counter-reset: manifestationCounter;
 }
@@ -216,13 +225,13 @@ counter-increment: manifestationCounter;
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)" Quelle "counter(manifestationCounter);
+    content: "Quelle "counter(manifestationCounter);
 }
 manifestation {
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".1 Allgemeine Beschreibung";
+    content: "Allgemeine Beschreibung";
 }
 identifier{
 display:block;
@@ -270,10 +279,11 @@ display:block;
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
-arranger > persName{
+arranger > persName
+{
 display:block; 
  content:
-    oxy_label(text, "Bearbeiter:", width, 20%) 
+    oxy_label(text, "Bearbeiter:", width, 30%) 
         oxy_textfield(edit, '#text', columns, 20)
         oxy_combobox( 
             edit, '@auth',
@@ -281,6 +291,43 @@ display:block;
             canRemoveValue, true,
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+}
+funder > persName{
+display:block;
+  content:
+    oxy_label(text, "Auftraggeber:", width, 20%) 
+        oxy_combobox(
+        width, 20%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+        oxy_combobox( 
+            edit, '@auth',
+            editable, false,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+}
+funder > corpName{
+display:block;
+  content:
+    oxy_label(text, "Auftraggeber:", width, 20%) 
+        oxy_combobox(
+        width, 40%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
+            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
+        oxy_combobox( 
+        width, 40%,
+            edit, '@auth',
+            editable, false,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }
 editor > persName{
 display:block;
@@ -320,7 +367,7 @@ physDesc:before{
   display:block;
   background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".2 Physikalische Beschreibung der Quelle";
+    content: "Physikalische Beschreibung der Quelle";
 }
 physDesc{
   display:block;
@@ -519,7 +566,7 @@ physLoc:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".3 Bestandshaltende Institution";
+    content: "Bestandshaltende Institution";
 }
 physLoc{
   display:block;
@@ -540,32 +587,32 @@ creation:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".4 Zur Entstehung der Quelle";
+    content: "Zur Entstehung";
 }
 creation{display:block;
     border:1px solid black;
-          content:oxy_label(text, "Entstehung:", width, 20%)
+          content:
           oxy_textArea(
           edit, '#text',
           contentType, 'text/xml',
           rows, 10,
-          columns, 44)
+          columns, 50)
            
 }
 history:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".5 Zur Geschichte der Quelle";
+    content: "Zur Geschichte ";
 }
 history{display:block;
     border:1px solid black;
-          content:oxy_label(text, "Geschichte:", width, 20%)
+          content:
           oxy_textArea(
           edit, '#text',
           contentType, 'text/xml',
           rows, 10,
-          columns, 44)
+          columns, 50)
            
 }
 
@@ -573,11 +620,10 @@ langUsage:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".6 Sprachen";
+    content: "Verwendete Sprachen";
 }
 langUsage{display:block;
     border:1px solid black;
-          content:oxy_label(text, "Benutzte Sprachen:", width, 20%)
 }
 
 language{
@@ -588,7 +634,7 @@ notesStmt:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".7 Annotationen";
+    content: "Annotationen";
     counter-reset: annots;
     
 }
@@ -610,29 +656,29 @@ annot{display:block;
 
 }
 
-classification{
+classification:before{
   display:block;
-    border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".8 Klassifikationen";
-}
-termList:before{
-  display:block;
-    border:1px solid black;
+    background-color:rgb(230, 230, 230);
     padding-left:5px;
-          content:oxy_label(text, "Tags:", width, 20%)
+    border:1px solid black;
+    content: "Klassifikationen";
 }
-
+termList{
+    display:block;
+    border:1px solid black;
+}
 term{
+padding-left:5px;
 display:block;
   content:oxy_label(text, "Tag:", width, 5%)
           oxy_combobox( 
             width, 20%
             edit, '@type',
-            editable, true)
+            editable, false)
           oxy_combobox( 
             width, 20%
-            edit, '#text',
-            editable, true)
+            edit, '@subtype',
+            editable, false)
 }
 ptr{
   display:inline-block;
@@ -647,25 +693,29 @@ ptr{
 }
 relationList:before{
   display:block;
+  background-color:rgb(200,200,200);
     border:1px solid black;
     padding-left:5px;
           content:oxy_label(text, "Beziehungen zu anderen Werken/Quellen:", width, 20%)
 }
 
+relationList{
+  display:block;
+    border:1px solid black;}
+    
 relation:before{
   content: oxy_combobox( 
-            width, 20%,
+            width, 25%,
             edit, '@rel',
-            editable, false,
-            values, 'isEmbodimentOf,hasAlternate',
-            labels, 'Ist Verkörperung von,hat Alternative')
+            editable, false/*,
+            labels, '1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5,6,7,8,9,10,1,2,3,4,5'*/)
 }
-relation[rel=hasAlternate]{
+relation[rel=hasEmbodiment], relation[rel=hasAlternate]{
 display:block;
 -oxy-link:attr(target);
 content:
   oxy_combobox( 
-            width, 40%,
+            width, 50%,
             edit, '@target',
             editable, false,
             values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
@@ -692,7 +742,7 @@ extMeta:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Teil 3."counter(manifestationCounter)".9 extMeta (TEI)";
+    content: "extMeta (TEI)";
 }
 extMeta{
   display:block;
@@ -703,6 +753,42 @@ extMeta{
           contentType, 'text/xml',
           rows, 10,
           columns, 60)
+           
+}
+
+audience:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Zum Auditorium";
+}
+audience{
+  display:block;
+    border:1px solid black;
+          content:
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 50)
+           
+}
+
+context:before{
+  display:block;
+    background-color:rgb(230, 230, 230);
+    border:1px solid black;
+    content: "Zum Kontext";
+}
+context{
+  display:block;
+    border:1px solid black;
+          content:
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 50)
            
 }
 mdiv:before {
