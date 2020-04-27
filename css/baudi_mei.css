@@ -35,7 +35,14 @@ biblList,
 facsimile,
 scoreDef,
 section,
-extMeta > *
+extMeta > *,
+annot[type=criticalCommentary],
+annot[type=criticalCommentary] > *,
+classCode,
+termList[classcode*=ediromPriority],
+termList[classcode*=ediromCategory],
+term[classcode*=ediromPriority],
+term[classcode*=ediromCategory]
 {display:none !important;
 visibility:-oxy-collapse-text;
 }
@@ -57,6 +64,10 @@ creation >*,
 history >*,
 term,
 head,
+language,
+audience > *,
+contentItem,
+context,
 l
 {visibility:-oxy-collapse-text;
  display:block;}
@@ -70,31 +81,120 @@ fileDesc:before {
 }
 
 fileDesc{}
-
-titlePart[type=main]:before {
-padding-left:5px;
-    content:
-    oxy_label(text, "Titel", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 10)
+title{
+border:1px solid black;
+    display:block;
+    content: 'Titelei\A'
+          oxy_button(action, oxy_action(
+            name, 'new titlePart', 
+            description, 'Insert an titlePart as last child into title', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<titlePart xmlns="http://www.music-encoding.org/ns/mei"></titlePart>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'))
 }
-titlePart[type=subordinate]:before {
+titlePart:before{
+    display:inline-block;
+    content: oxy_combobox( 
+            edit, '@type',
+            editable, false,
+            values, 'main,number,subordinate,perfmedium',
+            labels, 'Titel, Nummer, Untertitel, Besetzung');
+}
+titlePart[type=main] {
+display:block;
 padding-left:5px;
     content:
-    oxy_label(text, "Untertitel", width, 20%) 
+/*    oxy_label(text, "Titel", width, 20%) */
         oxy_textfield(edit, '#text', columns, 30)
 }
-titlePart[type=desc]:before {
+titlePart[type=subordinate] {
+display:block;
 padding-left:5px;
     content:
-    oxy_label(text, "Beschreibung", width, 20%) 
+/*    oxy_label(text, "Untertitel", width, 20%) */
         oxy_textfield(edit, '#text', columns, 30)
 }
+titlePart[type=perfmedium] {
+display:block;
+padding-left:5px;
+    content:
+/*    oxy_label(text, "Besetzung", width, 20%) */
+        oxy_textfield(edit, '#text', columns, 30)
+}
+titlePart[type=number] {
+display:block;
+padding-left:5px;
+content:
+/*    oxy_label(text, "Nummer", width, 20%) */
+    oxy_checkbox(edit, '@auth', values, 'opus,woo', labels, 'Opus, WoO')
+        oxy_textfield(edit, '#text', columns, 5)
+}
 
+title:after{
+    display:block;
+    padding-left:5px;
+    background-color:rgb(180, 180, 180);
+    border:1px solid black;
+    content:oxy_button(action, oxy_action(
+            name, 'Komp.', 
+            description, 'Insert a composer', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<composer xmlns="http://www.music-encoding.org/ns/mei"></composer>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            oxy_button(action, oxy_action(
+            name, 'Arr.', 
+            description, 'Insert an arranger', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<arranger xmlns="http://www.music-encoding.org/ns/mei"></arranger>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            oxy_button(action, oxy_action(
+            name, 'Hrsg.', 
+            description, 'Insert an editor', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<editor xmlns="http://www.music-encoding.org/ns/mei"></editor>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            oxy_button(action, oxy_action(
+            name, 'Dichter', 
+            description, 'Insert a lyricist', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<lyricist xmlns="http://www.music-encoding.org/ns/mei"></lyricist>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            oxy_button(action, oxy_action(
+            name, 'Auftragg.', 
+            description, 'Insert a funder', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<funder xmlns="http://www.music-encoding.org/ns/mei"></funder>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+            oxy_button(action, oxy_action(
+            name, 'Widmung', 
+            description, 'Insert a responsibility statement', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<respStmt xmlns="http://www.music-encoding.org/ns/mei"></respStmt>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'After'))
+}
 work:before {
     display:block;
     background-color:rgb(200, 200, 200);
     border:1px solid black;
-    content: "Metadaten zum Werk";
+    content: "Metadaten zum Werk (" attr(xml\:id) ") " oxy_combobox( 
+            edit, '@status',
+            editable, false,
+            values, 'created,reviewed,public',
+            labels, 'erstellt,geprüft,öffentlich');
     padding-left:5px;
 }
 work {
@@ -131,7 +231,6 @@ oxy_combobox(
             values, 'major,minor,dorian,phrygian,lydian,mixolydian,aeolian,locrian',
             labels, 'Dur,Moll,Dorisch,Phrygisch,Lydisch,Mixolydisch,Äolisch,Lokrisch'
 )
-
 }
 
 meter{
@@ -156,6 +255,7 @@ oxy_combobox(
             width, 25%,
             edit, '@sym',
             editable, false,
+            canRemoveValue, true,
             values, 'common,cut',
             labels, 'C,Alla breve'
 )
@@ -178,25 +278,34 @@ perfMedium:before{
 }
 perfResList {
   display:block;
+  content: oxy_button(action, oxy_action(
+          name, 'weiteres Instrument', 
+          description, 'Insert an new perfRes inside as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<perfRes xmlns="http://www.music-encoding.org/ns/mei" auth=""></perfRes>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as last child'
+))
 }
 perfRes{
 padding-left:5px;
 display:block;
 border:1px solid black;
   padding-left:5px;
-content:oxy_label(text, "Instrumentenangabe (Dipl.):", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 30)
-        '\A'
-        oxy_label(text, "Anzahl:", width, 20%) 
-        oxy_textfield(edit, '@count', columns, 4)
-        oxy_checkbox(edit, '@solo', values, 'true', labels, 'Solo')
-        '\A'
-        oxy_label(text, "Instrument:", width, 20%)
+content:oxy_label(text, "Instrument:", width, 20%)
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
            labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
+       '\A'
+       oxy_label(text, "Instrumentenangabe (Dipl.):", width, 20%) 
+        oxy_textfield(edit, '#text', columns, 30)
+        '\A'
+        oxy_label(text, "Anzahl:", width, 20%) 
+        oxy_textfield(edit, '@count', columns, 4)
+        oxy_checkbox(edit, '@solo', values, 'true', labels, 'Solo')
 }
 
 contents:before{
@@ -207,6 +316,15 @@ border:1px solid black;
 }
 contents{display:block;
 border:1px solid black;
+content:oxy_button(action, oxy_action(
+          name, 'neuer Punkt', 
+          description, 'Insert a new contentItem as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<contentItem xmlns="http://www.music-encoding.org/ns/mei"></contentItem>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as first child'
+));
 }
 contentItem{
     display:block;
@@ -247,22 +365,8 @@ content:oxy_label(text, "Signatur/ID:", width, 20%)
         oxy_textfield(edit, '#text', columns, 30)
 }
 
-titlePart[type=main]:before {
-    content:
-    oxy_label(text, "Titel", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 30)
-}
-title[type=subordinate]:before {
-    content:
-    oxy_label(text, "Untertitel", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 30)
-}
-title[type=desc]:before {
-    content:
-    oxy_label(text, "Beschreibung", width, 20%) 
-        oxy_textfield(edit, '#text', columns, 30)
-}
 composer:before{
+padding-left:5px;
 display:block;
   content:
     oxy_label(text, "Komponist:", width, 20%) 
@@ -287,7 +391,7 @@ oxy_button(action, oxy_action(
 }
 composer > persName{
 display:block;
-padding-left:5%;
+padding-left:10px;
   content:
         oxy_combobox(
         width, 20%,
@@ -305,6 +409,7 @@ padding-left:5%;
 }
 
 arranger:before{
+padding-left:5px;
 display:block;
   content:
     oxy_label(text, "Bearbeiter:", width, 20%) 
@@ -330,7 +435,7 @@ oxy_button(action, oxy_action(
 arranger > persName
 {
 display:block; 
-padding-left:5%;
+padding-left:10px;
  content:
         oxy_textfield(edit, '#text', columns, 20)
         oxy_combobox( 
@@ -341,6 +446,7 @@ padding-left:5%;
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
 funder:before{display:block;
+padding-left:5px;
   content:oxy_label(text, "Auftraggeber:", width, 20%)
   oxy_button(action, oxy_action(
           name, 'persName', 
@@ -362,7 +468,7 @@ oxy_button(action, oxy_action(
 ))}
 funder > persName{
 display:block;
-padding-left:5%;
+padding-left:10px;
   content:
         oxy_combobox(
         width, 20%,
@@ -379,6 +485,7 @@ padding-left:5%;
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 funder > corpName{
+padding-left:10px;
 display:block;
   content:
         oxy_combobox(
@@ -397,6 +504,7 @@ display:block;
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }
 editor:before{
+padding-left:5px;
 display:block;
   content:
     oxy_label(text, "Herausgeber:", width, 20%) 
@@ -421,7 +529,7 @@ oxy_button(action, oxy_action(
 }
 editor > persName{
 display:block;
-padding-left:5%;
+padding-left:10px;
   content:
   oxy_textfield(edit, '#text', columns, 20)
            oxy_combobox( 
@@ -432,6 +540,7 @@ padding-left:5%;
             labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
 lyricist:before{
+padding-left:5px;
 display:block;
   content:
     oxy_label(text, "Textdichter:", width, 20%) 
@@ -456,21 +565,31 @@ oxy_button(action, oxy_action(
 }
 lyricist > persName{
 display:block;
-padding-left:5%;
+padding-left:10px;
   content:
-        oxy_textfield(edit, '#text', columns, 20)
+        oxy_combobox(
+        width, 20%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
             values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 
+respStmt:before{
+padding-left:5px;
+display:block;
+  content:oxy_label(text, "Widmungsvermerk:", width, 20%);
+}
 respStmt{
 display:block;
-  content:oxy_label(text, "Widmungsvermerk:", width, 20%)
-          oxy_textArea(
+  content:oxy_textArea(
           edit, '#content',
           contentType, 'text/xml',
           rows, 10,
@@ -738,10 +857,22 @@ langUsage:before{
 }
 langUsage{display:block;
     border:1px solid black;
+    content:oxy_button(action, oxy_action(
+          name, 'weitere Sprache', 
+          description, 'Insert an new language inside as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<language xmlns="http://www.music-encoding.org/ns/mei" auth=""></language>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as last child'))
 }
 
 language{
-  content:oxy_checkbox(edit, '@auth', values, 'de,en,fr,it', labels, 'deutsch,englisch,französisch,italienisch');
+display:block;
+  content:oxy_checkbox(edit, '@auth',
+                       values, 'de,en,fr,it,latin',
+                       labels, 'deutsch,englisch,französisch,italienisch,latein')
+           oxy_textfield(edit, '#text', columns, 20);
 }
 
 notesStmt:before{
@@ -839,7 +970,7 @@ oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-content
 ;
 }
 
-relation[rel=isEmbodimentOf]{
+relation[rel=isEmbodimentOf], relation[rel=isRealizationOf], relation[rel=hasRealization]{
 display:block;
   content:  
   oxy_combobox( 

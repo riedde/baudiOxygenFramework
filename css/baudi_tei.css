@@ -489,3 +489,13 @@ quote:after{
 span[type=box]{
     border-color:black
 }
+
+hi[rend=center]{
+    text-align: center;
+}
+hi[rend=left]{
+    text-align: left;
+}
+hi[rend=right]{
+    text-align: right;
+}

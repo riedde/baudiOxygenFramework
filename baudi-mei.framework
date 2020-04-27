@@ -17,7 +17,7 @@
 								<Integer>6</Integer>
 							</field>
 							<field name="uri">
-								<String>${framework}/schema/mei-baudi.rng</String>
+								<String>${framework}/schema/mei_baudi.rng</String>
 							</field>
 						</docTypeSchema>
 					</field>
