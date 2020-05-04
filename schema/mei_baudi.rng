@@ -5,7 +5,7 @@
          xmlns:teix="http://www.tei-c.org/ns/Examples"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.music-encoding.org/ns/mei"><!--
-Schema generated from ODD source 2020-04-27T16:16:05Z. .
+Schema generated from ODD source 2020-04-30T11:45:52Z. .
 TEI Edition: Version 4.0.0
 TEI Edition Location: http://www.tei-c.org/Vault/P5//
   
@@ -6958,14 +6958,13 @@ Suggested values include: 1] glue; 2] thread; 3] needle; 4] tape; 5] staple</a:d
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="mei-work-text-matched-type-constraint-report-1">
-            <rule context="tei:work">
+            <rule context="mei:work">
                <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="/root()/node()=work">
-                @xml:id is required because work is root element
-              </sch:report>
+                           test="not(parent::mei:workList) and not(@xml:id)"> @xml:id is required because work is not part of workList (in this case
+                work should be root) </sch:report>
             </rule>
          </pattern>
          <ref name="mei_att.basic.attribute.xmlbase"/>
@@ -6987,13 +6986,17 @@ Suggested values include: 1] glue; 2] thread; 3] needle; 4] tape; 5] staple</a:d
          <ref name="mei_att.dataPointing.attributes"/>
          <ref name="mei_att.pointing.attributes"/>
          <ref name="mei_att.targetEval.attributes"/>
-         <attribute name="xml:id">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Regularizes the naming of an element and thus facilitates building links between it and other resources. Each id attribute within a document must have a unique value. In case of 'work' is the root element, @xml:id is required</a:documentation>
-            <data type="ID"/>
-         </attribute>
-         <attribute name="status">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Defines the status of proofreading. This attribute is required.</a:documentation>
-         </attribute>
+         <optional>
+            <attribute name="xml:id">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Regularizes the naming of an element and thus facilitates building links between it and other resources. Each id attribute within a document must have a unique value. In case of 'work' is the root element, @xml:id is required</a:documentation>
+               <data type="ID"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="status">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Defines the status of proofreading. This attribute is required.</a:documentation>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
@@ -9196,7 +9199,7 @@ Suggested values include: 1] paper; 2] parch; 3] mixed</a:documentation>
          </attribute>
       </optional>
    </define>
-   <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
+   <!--<pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="mei-att.classed-class-check_classURI-constraint-rule-76">
       <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                 xmlns:rng="http://relaxng.org/ns/structure/1.0"
@@ -9204,10 +9207,10 @@ Suggested values include: 1] paper; 2] parch; 3] mixed</a:documentation>
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
                 context="@class">
-              <sch:assert test="every $i in tokenize(., '\s+') satisfies substring($i,2)=//mei:category/@xml:id or matches($i, '^([a-z]+://|\.{1,2}/)')">The value in @class must either correspond to the @xml:id attribute of a category
+              <sch:assert test="every $i in tokenize(., '\s+') satisfies substring($i,2)=//mei:category/@xml:id or matches($i, '^([a-z]+://|\.{1,2}/)') or starts-with(.,'#')">The value in @class must either correspond to the @xml:id attribute of a category
                 element or be an external URL.</sch:assert>
             </sch:rule>
-   </pattern>
+   </pattern>-->
    <define name="mei_att.clef.log.attributes">
       <ref name="mei_att.clefShape.attributes"/>
       <ref name="mei_att.lineLoc.attributes"/>
@@ -13293,6 +13296,12 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
                   <ref name="mei_model.transcriptionLike"/>
                </choice>
             </zeroOrMore>
+            <zeroOrMore>
+               <choice>
+                  <text/>
+                  <ref name="mei_model.eventLike"/>
+               </choice>
+            </zeroOrMore>
          </choice>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="mei-annot-Check_annot_data-constraint-rule-107">
@@ -13301,7 +13310,8 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
                       xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                       xmlns="http://www.tei-c.org/ns/1.0"
                       context="mei:annot[@data]">
-                <sch:assert test="ancestor::mei:notesStmt">The @data attribute may only occur on an annotation within the notesStmt element.</sch:assert>
+                <sch:assert test="ancestor::mei:notesStmt">The @data attribute may only occur on an annotation within the
+                  notesStmt element.</sch:assert>
               </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -13316,7 +13326,20 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
             annotation within the notesStmt element.</sch:assert>
             </sch:rule>
          </pattern>
-         <ref name="mei_att.common.attributes"/>
+         <ref name="mei_att.basic.attribute.xmlbase"/>
+         <ref name="mei_att.id.attribute.xmlid"/>
+         <ref name="mei_att.labelled.attribute.label"/>
+         <ref name="mei_att.linking.attribute.copyof"/>
+         <ref name="mei_att.linking.attribute.corresp"/>
+         <ref name="mei_att.linking.attribute.follows"/>
+         <ref name="mei_att.linking.attribute.next"/>
+         <ref name="mei_att.linking.attribute.precedes"/>
+         <ref name="mei_att.linking.attribute.prev"/>
+         <ref name="mei_att.linking.attribute.sameas"/>
+         <ref name="mei_att.linking.attribute.synch"/>
+         <ref name="mei_att.nNumberLike.attribute.n"/>
+         <ref name="mei_att.responsibility.attribute.resp"/>
+         <ref name="mei_att.classed.attribute.class"/>
          <ref name="mei_att.annot.log.attributes"/>
          <ref name="mei_att.audience.attributes"/>
          <ref name="mei_att.bibl.attributes"/>
@@ -13326,6 +13349,12 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
          <ref name="mei_att.plist.attributes"/>
          <ref name="mei_att.source.attributes"/>
          <ref name="mei_att.targetEval.attributes"/>
+         <optional>
+            <attribute name="type">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Designation which characterizes the element in some sense, using any convenient classification scheme or typology that employs single-token labels.</a:documentation>
+               <data type="NCName"/>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
@@ -14911,7 +14940,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
    </define>
    <define name="mei_note">
       <element name="note">
-         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A single pitched event. </a:documentation>
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">(annotation) – Provides a statement explaining the text or indicating the basis for an assertion.</a:documentation>
          <zeroOrMore>
             <choice>
                <ref name="mei_model.noteModifierLike"/>
@@ -14922,9 +14951,27 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
                <ref name="mei_model.transcriptionLike"/>
             </choice>
          </zeroOrMore>
-         <ref name="mei_att.common.attributes"/>
+         <ref name="mei_att.basic.attribute.xmlbase"/>
+         <ref name="mei_att.id.attribute.xmlid"/>
+         <ref name="mei_att.labelled.attribute.label"/>
+         <ref name="mei_att.linking.attribute.copyof"/>
+         <ref name="mei_att.linking.attribute.corresp"/>
+         <ref name="mei_att.linking.attribute.follows"/>
+         <ref name="mei_att.linking.attribute.next"/>
+         <ref name="mei_att.linking.attribute.precedes"/>
+         <ref name="mei_att.linking.attribute.prev"/>
+         <ref name="mei_att.linking.attribute.sameas"/>
+         <ref name="mei_att.linking.attribute.synch"/>
+         <ref name="mei_att.nNumberLike.attribute.n"/>
+         <ref name="mei_att.responsibility.attribute.resp"/>
+         <ref name="mei_att.classed.attribute.class"/>
          <ref name="mei_att.facsimile.attributes"/>
          <ref name="mei_att.note.log.attributes"/>
+         <ref name="mei_att.accidental.attributes"/>
+         <attribute name="type">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Designation which characterizes the element in some sense, using any convenient classification scheme or typology that employs single-token labels.</a:documentation>
+            <data type="NCName"/>
+         </attribute>
          <empty/>
       </element>
    </define>
@@ -16080,26 +16127,24 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="mei-term-text-matched-type-constraint-report-2">
-            <rule context="tei:term">
+            <rule context="mei:term">
                <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type = 'workGroup' and  not( @subtype = ('chamber','song','orchestral','choir') )">
-                Subtype of workGroup should be 'chamber','song','orchestral','choir'
-              </sch:report>
+                           test="@type = 'workGroup' and not(@subtype = ('chamber','song','orchestral','choir'))"> Subtype of
+                workGroup should be 'chamber','song','orchestral','choir' </sch:report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
                   id="mei-term-text-matched-type-constraint-report-3">
-            <rule context="tei:term">
+            <rule context="mei:term">
                <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type = 'genre' and not( @subtype =('song','choir','stingQuartett'))">
-                Subtype of genre should be 'song','choir','stingQuartett'
-              </sch:report>
+                           test="@type ='genre' and not( @subtype = ('song','choir','stingQuartett'))"> Subtype of genre should be
+                'song','choir','stingQuartett' </sch:report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -16142,25 +16187,23 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             </choice>
          </attribute>
-         <optional>
-            <attribute name="subtype">
+         <attribute name="subtype">
+            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            <choice>
+               <value>chamber</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <choice>
-                  <value>chamber</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>orchestral</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>vocal</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>song</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>choir</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>stingQuartett</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               </choice>
-            </attribute>
-         </optional>
+               <value>orchestral</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>vocal</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>song</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>choir</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+               <value>stingQuartett</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
+            </choice>
+         </attribute>
          <empty/>
       </element>
    </define>

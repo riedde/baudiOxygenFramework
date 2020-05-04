@@ -14,6 +14,7 @@ let $doc := ./root()/node()
 let $id := uuid:randomUUID()
 
 let $fileIDbefore := $doc/@xml:id
+let $sourceID as xs:string := concat('baudi-01-', substring(fn:string($id), 1, 8))
 let $workID as xs:string := concat('baudi-02-', substring(fn:string($id), 1, 8))
 let $persID as xs:string := concat('baudi-04-', substring(fn:string($id), 1, 8))
 let $orgID as xs:string := concat('baudi-05-', substring(fn:string($id), 1, 8))
@@ -27,6 +28,8 @@ let $newID := if (string(node-name($doc)) = 'person')
               then ($placeID)
               else if (string(node-name($doc)) ='work')
               then ($workID)
+              else  if (string(node-name($doc)) ='mei')
+              then ($sourceID)
               else ()
 
 return
@@ -35,6 +38,12 @@ return
         then(for $ID in $doc//@xml:id[contains(.,$fileIDbefore)]
                 let $IDending := substring($ID,18)
                 let $IDrenewed := concat($workID,$IDending)
+                return
+                    replace value of node $ID with $IDrenewed)
+        else if(string(node-name($doc)) ='mei')
+        then(for $ID in $doc//@xml:id[contains(.,$fileIDbefore)]
+                let $IDending := substring($ID,18)
+                let $IDrenewed := concat($sourceID,$IDending)
                 return
                     replace value of node $ID with $IDrenewed)
         else(replace value of node $fileIDbefore with $newID)

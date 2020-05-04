@@ -26,7 +26,6 @@ sourceDesc,
 incip,
 titlePage > *,
 condition > *,
-repository >*,
 creation >*,
 history >*,
 contents > *:not(contentItem),
@@ -56,21 +55,32 @@ persName,
 titlePage,
 dimensions,
 extent,
+addDesc,
 condition,
 hand,
 physMedium,
 physLoc > *,
-creation >*,
-history >*,
+creation > *,
+history > *,
 term,
 head,
 language,
 audience > *,
 contentItem,
 context,
-l
+scoreFormat,
+watermark,
+plateNum,
+l,
+annot
 {visibility:-oxy-collapse-text;
  display:block;}
+
+*:after{content:oxy_action(
+          name, 'X', 
+          description, 'Delete an element', 
+          operation, 'ro.sync.ecss.extensions.commons.operations.DeleteElementOperation')
+}
 
 fileDesc:before {
     display:block;
@@ -80,8 +90,13 @@ fileDesc:before {
     padding-left:5px;
 }
 
-fileDesc{}
-title{
+fileDesc > titleStmt > title{
+border:1px solid black;
+    display:block;
+    content: oxy_label(text, "Einheitstitel", width, 10%) oxy_textfield(edit, '#text', columns, 30);
+    }
+    
+work > title{
 border:1px solid black;
     display:block;
     content: 'Titelei\A'
@@ -99,8 +114,8 @@ titlePart:before{
     content: oxy_combobox( 
             edit, '@type',
             editable, false,
-            values, 'main,number,subordinate,perfmedium',
-            labels, 'Titel, Nummer, Untertitel, Besetzung');
+            values, 'main,number,subordinate,perfmedium, dedication',
+            labels, 'Titel, Nummer, Untertitel, Besetzung,Widmung');
 }
 titlePart[type=main] {
 display:block;
@@ -131,8 +146,19 @@ content:
     oxy_checkbox(edit, '@auth', values, 'opus,woo', labels, 'Opus, WoO')
         oxy_textfield(edit, '#text', columns, 5)
 }
+titlePart[type=dedication] {
+display:block;
+padding-left:5px;
+content:
+        oxy_textArea(
+          edit, '#text',
+          contentType, 'text/javascript',
+          rows, 10,
+          columns, 45
+)
 
-title:after{
+}
+work > title:after{
     display:block;
     padding-left:5px;
     background-color:rgb(180, 180, 180);
@@ -177,16 +203,16 @@ title:after{
             arg-fragment, '<funder xmlns="http://www.music-encoding.org/ns/mei"></funder>',
             arg-insertLocation, '.',
             arg-insertPosition, 'After'))
-            oxy_button(action, oxy_action(
+            /*oxy_button(action, oxy_action(
             name, 'Widmung', 
             description, 'Insert a responsibility statement', 
             icon, url('insert.png'), 
             operation, 'InsertFragmentOperation', 
-            arg-fragment, '<respStmt xmlns="http://www.music-encoding.org/ns/mei"></respStmt>',
+            arg-fragment, '<respStmt xmlns="http://www.music-encoding.org/ns/mei"><resp></resp></respStmt>',
             arg-insertLocation, '.',
-            arg-insertPosition, 'After'))
+            arg-insertPosition, 'After'))*/
 }
-work:before {
+:not(workList) > work:before {
     display:block;
     background-color:rgb(200, 200, 200);
     border:1px solid black;
@@ -195,6 +221,13 @@ work:before {
             editable, false,
             values, 'created,reviewed,public',
             labels, 'erstellt,geprüft,öffentlich');
+    padding-left:5px;
+}
+work:before {
+    display:block;
+    background-color:rgb(200, 200, 200);
+    border:1px solid black;
+    content: "Metadaten zum Werk";
     padding-left:5px;
 }
 work {
@@ -349,12 +382,27 @@ counter-increment: manifestationCounter;
 manifestation {
   display:block;
   background-color:rgb(230, 230, 230);
-    border:1px solid black;
-    content: "Allgemeine Beschreibung";
+    border:1px solid blue;
+    content: "Allgemeine Beschreibung" oxy_combobox( 
+            edit, '@class',
+            editable, false,
+            values, '#ms, #pr, #pa',
+            labels, 'Manuskript, Druck, Teilautograph');
 }
+manifestationList > manifestation:after {
+  display:block;
+  content:oxy_button(action, oxy_action(
+          name, 'weitere Quelle', 
+          description, 'Insert a new manifestation as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<manifestation xmlns="http://www.music-encoding.org/ns/mei"></manifestation>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as last child'));
+  }
 identifier{
 display:block;
-border:1px solid black;
+border:1px dashed black;
   padding-left:5px;
 content:oxy_label(text, "Signatur/ID:", width, 20%) 
         oxy_combobox( 
@@ -585,15 +633,15 @@ padding-left:10px;
 respStmt:before{
 padding-left:5px;
 display:block;
-  content:oxy_label(text, "Widmungsvermerk:", width, 20%);
+  content:oxy_label(text, "Widmungsvermerk:", width, 10%);
 }
 respStmt{
 display:block;
   content:oxy_textArea(
           edit, '#content',
           contentType, 'text/xml',
-          rows, 10,
-          columns, 30)
+          rows, 15,
+          columns, 75)
 }
 
 physDesc:before{
@@ -683,9 +731,9 @@ scoreFormat{
   content:  oxy_label(text, "Partiturformat:", width, 20%)
             oxy_combobox( 
             edit, '#text',
-            editable, false,
-            values, 'song score, choir score, orchestral score, piano score',
-            labels, 'Liedpartitur, Chorpartitur, Orchesterpartitur, Klavierauszug')
+            editable, true,
+            values, 'song score, choir score, orchestral score, piano score, part',
+            labels, 'Liedpartitur, Chorpartitur, Orchesterpartitur, Klavierauszug, Stimme')
 }
 handList{
   display:block;
@@ -695,19 +743,33 @@ handList{
     padding-left:5px;
 }
 
-/*						<hand label="N 1r" medium="Bleistift">nach A-dur transponieren</hand>*/
-/*						<hand label="NW 1v BiblVermerk" medium="Bleistift">12</hand>*/
 hand {
   display:block;
+  border:1px dashed black;
   content:  oxy_label(text, "Hand", width, 7%)
+            oxy_label(text, "(label)", width)
             oxy_textfield(edit, '@label', columns, 20)
             oxy_combobox( 
             edit, '@medium',
             editable, false,
             values, 'Bleistift,TinteSchwarz,TinteBlau,TinteRot,FarbstiftBlau,FarbstiftRot,FarbstiftGrün,',
             labels, 'Bleistift,TinteSchwarz,TinteBlau,TinteRot,FarbstiftBlau,FarbstiftRot,FarbstiftGrün,')
+            oxy_label(text, "(Text)")
             oxy_textfield(edit, '#text', columns, 20)
+            oxy_label(text, "(id)")
+            oxy_combobox( 
+            edit, '@xml:id',
+            editable, false,
+            values, 'hand1,hand2,hand3,hand4,hand5,hand6,hand7,hand8,hand9,hand10');
 }
+
+addDesc{display:block;
+  content:oxy_label(text, "Zusätzliche Beschreibung", width, 20%)
+          oxy_textArea(
+          edit, '#content',
+          contentType, 'text/xml',
+          rows, 10,
+          columns, 45)}
 
 condition:before{
   display:block;
@@ -736,19 +798,37 @@ condition{display:block;
           rows, 10,
           columns, 60)}
 
+physMedium:before{
+border:1px solid black;
+display:block;
+content: "Beschreibung (physMedium)" oxy_button(action, oxy_action(
+          name, 'Stempel', 
+          description, 'Insert an new stamp inside as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<stamp xmlns="http://www.music-encoding.org/ns/mei"><locus type="stamps"><rend/><symbol/></locus></stamp>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as last child'))
+
+}
 physMedium{
 display:block;
-  content:oxy_label(text, "Medien:", width, 20%)
-          oxy_textArea(
-          edit, '#content',
+  content:oxy_label(text, "physMedium (Zusatz):", width, 10%)
+         oxy_textfield(edit, '#text', columns, 45);
+}
+physMedium > extent{
+display:block;
+  content:oxy_label(text, "Lagenordnung:", width, 10%)
+         oxy_textArea(
+          edit, '#text',
           contentType, 'text/xml',
           rows, 5,
-          columns, 44)
+          columns, 45);
 }
 locus{
   display:block;
     background-color:rgb(230, 230, 230);
-    border:1px solid black;
+    border:1px dashed black;
     content:oxy_label(text, "Vermerke", width, 20%)
     oxy_combobox( 
            width, 30%,
@@ -774,6 +854,7 @@ display:block;
            editable, false,
            values, 'top, middle, bottom',
            labels, 'oben, mittig, unten')
+           oxy_textfield(edit, '#text', columns, 35)
 }
 locus[type=paperNotes] > symbol{
 display:block;
@@ -806,15 +887,17 @@ physLoc{
     border:1px solid black;
 }
 
-repository{
+repository:before{
 display:block;
   content:oxy_label(text, "Sammlung:", width, 20%)
-          oxy_textArea(
+          /*oxy_textArea(
           edit, '#content',
           contentType, 'text/xml',
           rows, 5,
-          columns, 44)
+          columns, 44)*/
 }
+repository{
+display:block;}
 
 creation:before{
   display:block;
@@ -879,25 +962,45 @@ notesStmt:before{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Annotationen";
+    content: "Annotationen" oxy_button(action, oxy_action(
+            name, 'Anmerkung', 
+            description, 'Insert an annot as last child into noteStmt', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<annot xmlns="http://www.music-encoding.org/ns/mei" resp="dried"><locus type="biblNotes" corresp="hand1"><rend halign="" valign=""/><symbol/></locus></annot>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'))
+            oxy_button(action, oxy_action(
+            name, 'Ambitus', 
+            description, 'Insert an titlePart as last child into title', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<annot type="ambitus" corresp="baudi-09-dfea789e" xmlns="http://www.music-encoding.org/ns/mei"><note type="start"/>–<note type="end"/></annot>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'));
     counter-reset: annots;
     
 }
-annot:before{
+annot:not([type=ambitus]):before{
 counter-increment:annots;
 content:counter(annots)". "
 }
 annot{display:block;
-    border:1px solid black;
+    border:1px dashed black;
           content:oxy_label(text, "Anmerkung:", width, 13%)
           oxy_datePicker(edit, '@when', columns, 15, format, 'yyyy-MM-dd')
           oxy_combobox( 
-            width, 20%
+            width, 10%
+            edit, '@corresp',
+            editable, false,
+            values, oxy_xpath('string-join(//mei:handList/mei:hand/@xml:id,", ")'))
+oxy_textfield(edit, '#text', columns, 30)
+oxy_combobox( 
+            width, 10%
             edit, '@resp',
             editable, false,
-            values, 'dried',
-            labels, 'Dennis Ried'
-)
+            values, ',dried',
+            labels, ',Dennis Ried');
 
 }
 
@@ -1044,11 +1147,25 @@ mdiv:before {
     padding-left:5px;
 }
 
+div{display:block;
+content: oxy_checkbox(
+        edit, '@type',
+        values, 'songtext',
+        labels, 'Liedtext'
+)
+}
 div[type=songtext]{
   display:block;
   border:1px solid black;
   padding-left:5px;
-  content: "Part X.2 Liedtext";
+  content: "Liedtext" oxy_button(action, oxy_action(
+            name, 'Strophe', 
+            description, 'Insert an lg as last child into the current element', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<lg xmlns="http://www.music-encoding.org/ns/mei"></lg>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'));
   counter-reset:stanza;
 }
 lg:before{
@@ -1059,7 +1176,15 @@ lg{
   display:block;
   border:1px solid black;
   padding-left:5px;
-  content:oxy_label(text, "Strophe", width, 5%);
+  content:oxy_label(text, "Strophe", width, 5%)
+          oxy_button(action, oxy_action(
+            name, 'Vers', 
+            description, 'Insert an l as last child into the current element', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<l xmlns="http://www.music-encoding.org/ns/mei"></l>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'));
   counter-reset:verse
 }
 l:before{
@@ -1080,4 +1205,157 @@ head{
   padding-left:5px;
   content:oxy_label(text, "Titel", width, 6%)
   oxy_textfield(edit, '#text', columns, 45)
+}
+
+annot[type=ambitus]{
+padding-left:5px;
+display:block;
+border:1px dashed black;
+  padding-left:5px;
+content:oxy_label(text, "Ambitus:", width, 5%)
+        oxy_combobox( 
+            edit, '@corresp',
+            editable, false,
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
+           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
+}
+
+annot[type=ambitus] note[type=start]:before {
+/*    display:inline-block;*/
+    content:oxy_label(text, "von") 
+            oxy_combobox( 
+                edit, '@pname',
+                editable, false,
+                values, 'c,d,e,f,g,a,b',
+                labels, 'c,d,e,f,g,a,h'
+            )
+            oxy_combobox( 
+              edit, '@accid',
+              editable, false,
+              values, ',s,f,ss,ff,n',
+              labels, ',\266F,\266D,\2715,\266D\266D,\266E'
+            )
+            oxy_combobox( 
+              edit, '@oct',
+              editable, false,
+              values, '0,1,2,3,4,5,6,7',
+              labels, 'Sub-Kontra Oktave,Kontra Oktave,Große Oktave, Kleine Oktave, Eingestrichene Oktave, Zweigestrichene Oktave, Dreigestrichene Oktave, Viergestrichene Oktave'
+            );
+            visibility:-oxy-collapse-text;
+}
+annot[type=ambitus] note[type=startAlt]:before {
+/*    display:inline-block;*/
+    content: '(' oxy_combobox( 
+                edit, '@pname',
+                editable, false,
+                values, 'c,d,e,f,g,a,b',
+                labels, 'c,d,e,f,g,a,h'
+            )
+            oxy_combobox( 
+              edit, '@accid',
+              editable, false,
+              values, ',s,f,ss,ff,n',
+              labels, ',\266F,\266D,\2715,\266D\266D,\266E'
+            )
+            oxy_combobox( 
+              edit, '@oct',
+              editable, false,
+              values, '0,1,2,3,4,5,6,7',
+              labels, 'Sub-Kontra Oktave,Kontra Oktave,Große Oktave, Kleine Oktave, Eingestrichene Oktave, Zweigestrichene Oktave, Dreigestrichene Oktave, Viergestrichene Oktave'
+            ) ')';
+            visibility:-oxy-collapse-text;
+}
+
+annot[type=ambitus] note[type=end]:before {
+/*    display:inline-block;*/
+    content:oxy_label(text, "bis") 
+            oxy_combobox( 
+                edit, '@pname',
+                editable, false,
+                values, 'c,d,e,f,g,a,b',
+                labels, 'c,d,e,f,g,a,h'
+            )
+            oxy_combobox( 
+              edit, '@accid',
+              editable, false,
+              values, ',s,f,ss,ff,n',
+              labels, ',\266F,\266D,\2715,\266D\266D,\266E'
+            )
+            oxy_combobox( 
+              edit, '@oct',
+              editable, false,
+              values, '0,1,2,3,4,5,6,7',
+              labels, 'Sub-Kontra Oktave,Kontra Oktave,Große Oktave, Kleine Oktave, Eingestrichene Oktave, Zweigestrichene Oktave, Dreigestrichene Oktave, Viergestrichene Oktave'
+            );
+            visibility:-oxy-collapse-text;
+}
+annot[type=ambitus] note[type=endAlt]:before {
+/*    display:inline-block;*/
+    content: '(' oxy_combobox( 
+                edit, '@pname',
+                editable, false,
+                values, 'c,d,e,f,g,a,b',
+                labels, 'c,d,e,f,g,a,h'
+            )
+            oxy_combobox( 
+              edit, '@accid',
+              editable, false,
+              values, ',s,f,ss,ff,n',
+              labels, ',\266F,\266D,\2715,\266D\266D,\266E'
+            )
+            oxy_combobox( 
+              edit, '@oct',
+              editable, false,
+              values, '0,1,2,3,4,5,6,7',
+              labels, 'Sub-Kontra Oktave,Kontra Oktave,Große Oktave, Kleine Oktave, Eingestrichene Oktave, Zweigestrichene Oktave, Dreigestrichene Oktave, Viergestrichene Oktave'
+            ) ')';
+            visibility:-oxy-collapse-text;
+}
+
+watermark{
+    display:block;
+    content: oxy_label(text, "Wasserzeichen", width, 10%) oxy_textfield(edit, '#text', columns, 30);
+    }
+    
+plateNum{
+    display:block;
+    content: oxy_label(text, "Plattennummer", width, 10%) oxy_textfield(edit, '#text', columns, 30);
+    }
+    
+persName{
+display:block;
+padding-left:10px;
+  content:
+        oxy_combobox(
+        width, 20%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+        oxy_combobox( 
+            edit, '@auth',
+            editable, false,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+}
+corpName{
+padding-left:10px;
+display:block;
+  content:
+        oxy_combobox(
+        width, 40%,
+            edit, '#text',
+            editable, true,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
+            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
+        oxy_combobox( 
+        width, 40%,
+            edit, '@auth',
+            editable, false,
+            canRemoveValue, true,
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }
