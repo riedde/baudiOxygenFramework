@@ -59,4 +59,4 @@ let $workFile  := <work xmlns="http://www.music-encoding.org/ns/mei" xml:id="{$w
 </work>
 
 return
-    fn:put($workFile,concat('../../../../../Users/dried/Repositories/BauDi/baudi-contents/baudiWorks/data/new/',$workID,'.xml'))
+    fn:put($workFile,concat('../../../../../Users/dried/Repositories/BauDi/baudiWorks/data/new/',$workID,'.xml'))
