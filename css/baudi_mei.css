@@ -27,7 +27,6 @@ incip,
 titlePage > *,
 condition > *,
 creation >*,
-history >*,
 contents > *:not(contentItem),
 revisionDesc,
 biblList,
@@ -96,7 +95,7 @@ border:1px solid black;
     content: oxy_label(text, "Einheitstitel", width, 10%) oxy_textfield(edit, '#text', columns, 30);
     }
     
-work > title{
+title{
 border:1px solid black;
     display:block;
     content: 'Titelei\A'
@@ -158,7 +157,7 @@ content:
 )
 
 }
-work > title:after{
+title:after{
     display:block;
     padding-left:5px;
     background-color:rgb(180, 180, 180);
@@ -330,8 +329,8 @@ content:oxy_label(text, "Instrument:", width, 20%)
         oxy_combobox( 
             edit, '@auth',
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
-           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
+           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
        '\A'
        oxy_label(text, "Instrumentenangabe (Dipl.):", width, 20%) 
         oxy_textfield(edit, '#text', columns, 30)
@@ -356,7 +355,7 @@ content:oxy_button(action, oxy_action(
           operation, 'InsertFragmentOperation', 
           arg-fragment, '<contentItem xmlns="http://www.music-encoding.org/ns/mei"></contentItem>',
           arg-insertLocation, '.',
-          arg-insertPosition, 'Inside as first child'
+          arg-insertPosition, 'Inside as last child'
 ));
 }
 contentItem{
@@ -446,14 +445,14 @@ padding-left:10px;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 
 arranger:before{
@@ -490,8 +489,8 @@ padding-left:10px;
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
 funder:before{display:block;
 padding-left:5px;
@@ -523,14 +522,14 @@ padding-left:10px;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 funder > corpName{
 padding-left:10px;
@@ -541,15 +540,15 @@ display:block;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
-            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
+            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
         oxy_combobox( 
         width, 40%,
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }
 editor:before{
 padding-left:5px;
@@ -584,8 +583,8 @@ padding-left:10px;
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
 }
 lyricist:before{
 padding-left:5px;
@@ -620,14 +619,14 @@ padding-left:10px;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 
 respStmt:before{
@@ -739,7 +738,14 @@ handList{
   display:block;
     background-color:rgb(230, 230, 230);
     border:1px solid black;
-    content: "Hände";
+    content: "Hände" oxy_button(action, oxy_action(
+            name, 'neue Hand', 
+            description, 'Insert a hand as last child into title', 
+            icon, url('insert.png'), 
+            operation, 'InsertFragmentOperation', 
+            arg-fragment, '<hand xmlns="http://www.music-encoding.org/ns/mei" medium=""></hand>',
+            arg-insertLocation, '.',
+            arg-insertPosition, 'Inside as last child'));
     padding-left:5px;
 }
 
@@ -863,8 +869,8 @@ display:block;
            width, 40%,
            edit, '@class',
            editable, false,
-           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/@xml:id,', ')")
-           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/string(),', ')") )
+           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/@xml:id,', ')")
+           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='paperNotes']//tei:name/string(),', ')") )
 }
 locus[type=stamps] > symbol{
 display:block;
@@ -873,8 +879,8 @@ display:block;
            width, 40%,
            edit, '@class',
            editable, false,
-           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/@xml:id,', ')")
-           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/string(),', ')") )
+           values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/@xml:id,', ')")
+           labels,oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiResources/data/dicts?select=*.xml;sort=a;recurse=yes')//tei:category[@xml:id='stamps']//tei:name/string(),', ')") )
 }
 physLoc:before{
   display:block;
@@ -925,7 +931,7 @@ history{display:block;
     border:1px solid black;
           content:
           oxy_textArea(
-          edit, '#text',
+          edit, '#content',
           contentType, 'text/xml',
           rows, 10,
           columns, 50)
@@ -1014,6 +1020,15 @@ classification:before{
 termList{
     display:block;
     border:1px solid black;
+    content: oxy_button(action, oxy_action(
+          name, 'neue Klasse', 
+          description, 'Insert a term as last child', 
+          icon, url('insert.png'), 
+          operation, 'InsertFragmentOperation', 
+          arg-fragment, '<term xmlns="http://www.music-encoding.org/ns/mei"></term>',
+          arg-insertLocation, '.',
+          arg-insertPosition, 'Inside as last child'
+));
 }
 term{
 padding-left:5px;
@@ -1066,9 +1081,9 @@ content:
             width, 50%,
             edit, '@target',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
             , labels,
-oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
+oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiSources/data/music?select=*.xml;recurse=yes')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
 )
 ;
 }
@@ -1080,9 +1095,9 @@ display:block;
             width, 40%,
             edit, '@target',
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/ancestor::mei:mei/@xml:id,', ')")
             , labels,
-oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
+oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiWorks/data?select=*.xml')//mei:mei//mei:fileDesc//mei:title[@type='uniform'][1]/mei:titlePart[@type='main']/concat(normalize-space(translate(.,',',':')),' (',ancestor::mei:mei/@xml:id,')'),', ')")
 );
 }
 
@@ -1216,8 +1231,8 @@ content:oxy_label(text, "Ambitus:", width, 5%)
         oxy_combobox( 
             edit, '@corresp',
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
-           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudiResources/data/dicts/instruments.xml')//tei:category/@xml:id,', ')")
+           labels,oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudiResources/data/dicts/instruments.xml')//tei:category/tei:desc[@xml:lang='de']/tei:name[@type='standard']/string(),', ')"))
 }
 
 annot[type=ambitus] note[type=start]:before {
@@ -1331,14 +1346,14 @@ padding-left:10px;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:forename[1],' ',tei:persName/tei:surname[1]),', ')"))
         oxy_combobox( 
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data/?select=*.xml;sort=a;recurse=yes')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiPersons/data?select=*.xml;sort=a;recurse=yes')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' ',tei:persName/tei:forename[2],' (',@xml:id,')'),', ')"))
 }
 corpName{
 padding-left:10px;
@@ -1349,13 +1364,13 @@ display:block;
             edit, '#text',
             editable, true,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
-            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")
+            /*, labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/tei:orgName[1],', ')")*/)
         oxy_combobox( 
         width, 40%,
             edit, '@auth',
             editable, false,
             canRemoveValue, true,
-            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
+            values,  oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data/?select=*.xml;sort=a;recurse=yes')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudiInstitutions/data?select=*.xml;sort=a;recurse=yes')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 }

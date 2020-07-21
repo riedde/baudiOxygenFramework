@@ -60,8 +60,8 @@ org > listPerson > person > persName:before{
             edit, "@key", 
             editable, false,
             values, 
- oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/persons?select=*.xml')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
+ oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/persons?select=*.xml')/tei:person/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/persons?select=*.xml')/tei:person/concat(tei:persName/tei:surname[1],'\\, ',tei:persName/tei:forename[1],' (',@xml:id,')'),', ')"))
   '\A'
   oxy_checkbox(
         edit, '@type',
@@ -197,8 +197,8 @@ nationality{
     content: oxy_combobox(
             edit, "@key", 
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='nationality'],', ')"));
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='nationality'],', ')"));
 }
 
 occupation:before{
@@ -214,8 +214,8 @@ affiliation:before{
       oxy_combobox(
             edit, "@key", 
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/institutions?select=*.xml')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/institutions?select=*.xml')/tei:org/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/institutions?select=*.xml')/tei:org/concat(tei:orgName[1],' (',@xml:id,')'),', ')"))
 ;
 }
 idno[type=gnd]:before{
@@ -265,8 +265,8 @@ placeName:before{
       oxy_combobox(
             edit, "@key", 
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/loci?select=*.xml')/tei:place/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
             '\A'
       oxy_label(text, "\A Wann:", width, 20px, styles, "font-weight:normal;color:black;")
  oxy_textfield(columns, 12, edit, "@when-custom")
@@ -317,8 +317,8 @@ padding: 10px 10px 10px 10px;*/
     content: oxy_combobox(
             edit, "@key", 
             editable, false,
-            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/baudi-contents/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
+            values, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/loci?select=*.xml')/tei:place/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(collection('/Users/dried/Repositories/BauDi/loci?select=*.xml')/tei:place/concat(tei:placeName[1],' (',@xml:id,')'),', ')"))
             ;
 }
 region:before{
@@ -334,8 +334,8 @@ country{
     content: oxy_combobox(
             edit, "@key", 
             editable, false,
-            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
-            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/baudi-contents/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='country'],', ')"));
+            values, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category/@xml:id,', ')"),
+            labels, oxy_xpath("string-join(doc('/Users/dried/Repositories/BauDi/dicts/countries.xml')//tei:taxonomy/tei:category//tei:name[@type='country'],', ')"));
 
 }
 
