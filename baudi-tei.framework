@@ -515,10 +515,10 @@
 						<null/>
 					</field>
 					<field name="useImposedInitialPage">
-						<Boolean>false</Boolean>
+						<Boolean>true</Boolean>
 					</field>
 					<field name="imposedInitialPage">
-						<String>Author</String>
+						<String>Text</String>
 					</field>
 					<field name="elementLocatorExtension">
 						<null/>
