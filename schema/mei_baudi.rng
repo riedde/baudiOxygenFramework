@@ -16132,8 +16132,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type = 'workGroup' and not(@subtype = ('chamber','song','orchestral','choir'))"> Subtype of
-                workGroup should be 'chamber','song','orchestral','choir' </sch:report>
+                           test="@type = 'workGroup' and not(text()=('chamber','vocal','orchestral','instrumental'))">Text should be 'chamber','vocal','orchestral','instrumental' </sch:report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -16143,8 +16142,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type ='genre' and not( @subtype = ('song','choir','stingQuartett'))"> Subtype of genre should be
-                'song','choir','stingQuartett' </sch:report>
+                           test="@type ='genre' and not(text() = ('song','choir','quartett','ensemble'))"> Text should be 'song','choir','quartett','ensemble' </sch:report>
             </rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
@@ -16179,28 +16177,13 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
          <attribute name="type">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             <choice>
+               <value>source</value>
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                <value>workGroup</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                <value>genre</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                <value>keyword</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-            </choice>
-         </attribute>
-         <attribute name="subtype">
-            <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-            <choice>
-               <value>chamber</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <value>orchestral</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <value>vocal</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <value>song</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <value>choir</value>
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <value>stingQuartett</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             </choice>
          </attribute>
