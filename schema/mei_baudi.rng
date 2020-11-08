@@ -6963,8 +6963,13 @@ Suggested values include: 1] glue; 2] thread; 3] needle; 4] tape; 5] staple</a:d
                            xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                            xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                            xmlns="http://www.tei-c.org/ns/1.0"
-                           test="not(parent::mei:workList) and not(@xml:id)"> @xml:id is required because work is not part of workList (in this case
+                           test="not(parent::mei:workList) and not(parent::mei:componentList) and not(@xml:id)"> @xml:id is required because work is not part of workList or componentList (in this case
                 work should be root) </sch:report>
+               <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                  xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                  xmlns="http://www.tei-c.org/ns/1.0"
+                  test="parent::mei:componentList and not(@auth)"> @auth is required because work is part of componentList (a source-file must be linked) </sch:report>
             </rule>
          </pattern>
          <ref name="mei_att.basic.attribute.xmlbase"/>
@@ -13227,6 +13232,8 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Range of a voice, instrument or piece.</a:documentation>
          <ref name="mei_ambNote"/>
          <ref name="mei_ambNote"/>
+         <optional><ref name="mei_ambNote"/></optional>
+         <optional><ref name="mei_ambNote"/></optional>
          <ref name="mei_att.common.attributes"/>
          <ref name="mei_att.facsimile.attributes"/>
          <ref name="mei_att.ambitus.anl.attributes"/>
@@ -13241,9 +13248,9 @@ Suggested values include: 1] byte; 2] char; 3] cm; 4] deg; 5] in; 6] issue; 7] f
       <element name="ambNote">
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Highest or lowest pitch in a score, staff, or layer.</a:documentation>
          <empty/>
-         <ref name="mei_att.common.attributes"/>
-         <ref name="mei_att.facsimile.attributes"/>
-         <ref name="mei_att.ambNote.log.attributes"/>
+            <ref name="mei_att.common.attributes"/>
+            <ref name="mei_att.facsimile.attributes"/>
+            <ref name="mei_att.ambNote.log.attributes"/>
          <empty/>
       </element>
    </define>
@@ -15624,7 +15631,9 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             <ref name="mei_grpSym"/>
          </zeroOrMore>
          <optional>
+            <oneOrMore>
             <ref name="mei_ambitus"/>
+            </oneOrMore>
          </optional>
          <ref name="mei_att.common.attributes"/>
          <ref name="mei_att.scoreDef.log.attributes"/>
