@@ -66,25 +66,33 @@ countTimeEnd {
 layer:before {
   content: 'Systeme:\A'
            oxy_checkbox(
-           edit, '@pianoRight',
+           edit, '@pianoI',
            values, 'true',
-           labels, 'I')
+           labels, 'Klav-I')
            oxy_checkbox(
-           edit, '@pianoLeft',
+           edit, '@pianoII',
            values, 'true',
-           labels, 'II')
+           labels, 'Klav-II')
+            oxy_checkbox(
+           edit, '@organI',
+           values, 'true',
+           labels, 'Org-I')
            oxy_checkbox(
-           edit, '@pedal',
+           edit, '@organII',
            values, 'true',
-           labels, 'Pedal')
+           labels, 'Org-II')
+           oxy_checkbox(
+           edit, '@organPedal',
+           values, 'true',
+           labels, 'OrgPed')
             oxy_checkbox(
-           edit, '@organ',
+           edit, '@harmoniumI',
            values, 'true',
-           labels, 'Org')
-            oxy_checkbox(
-           edit, '@harmonium',
+           labels, 'Harm-I')
+           oxy_checkbox(
+           edit, '@harmoniumII',
            values, 'true',
-           labels, 'Harm')
+           labels, 'Harm-II')
            '\A'
            oxy_checkbox(
            edit, '@piccolo',
@@ -367,13 +375,50 @@ sources{
   content: oxy_checkbox(
         edit, '@sourceI',
         values, 'true',
-        labels, 'SV')
+        labels, 'A-P3')
         oxy_checkbox(
         edit, '@sourceII',
         values, 'true',
-        labels, 'SV-KA')
+        labels, 'A-P3-KA')
         oxy_checkbox(
         edit, '@sourceIII',
         values, 'true',
-        labels, 'ED')
+        labels, 'A-P1')
+        oxy_checkbox(
+        edit, '@sourceIV',
+        values, 'true',
+        labels, 'A-P2')
+        oxy_checkbox(
+        edit, '@sourceV',
+        values, 'true',
+        labels, 'A-StVl')
+        oxy_checkbox(
+        edit, '@sourceVI',
+        values, 'true',
+        labels, 'A-StOrch')
+        oxy_checkbox(
+        edit, '@sourceVII',
+        values, 'true',
+        labels, 'ED-P')
+        oxy_checkbox(
+        edit, '@sourceVIII',
+        values, 'true',
+        labels, 'ED-KA')
+        oxy_checkbox(
+        edit, '@sourceIX',
+        values, 'true',
+        labels, 'ED-KA2')
+        oxy_checkbox(
+        edit, '@sourceX',
+        values, 'true',
+        labels, 'ED-StOrch')
+        oxy_checkbox(
+        edit, '@sourceXI',
+        values, 'true',
+        labels, 'ED-StSSAA')
+        oxy_checkbox(
+        edit, '@sourceXII',
+        values, 'true',
+        labels, 'ED-StTTBB')
+        
 }

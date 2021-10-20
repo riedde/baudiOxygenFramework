@@ -162,7 +162,12 @@
               </attribute>
             </optional>
             <optional>
-              <attribute name="harmonium">
+              <attribute name="harmoniumI">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="harmoniumII">
                 <data type="boolean"/>
               </attribute>
             </optional>
@@ -192,22 +197,27 @@
               </attribute>
             </optional>
             <optional>
-              <attribute name="organ">
+              <attribute name="organI">
                 <data type="boolean"/>
               </attribute>
             </optional>
             <optional>
-              <attribute name="pedal">
+              <attribute name="organII">
                 <data type="boolean"/>
               </attribute>
             </optional>
             <optional>
-              <attribute name="pianoLeft">
+              <attribute name="organPedal">
                 <data type="boolean"/>
               </attribute>
             </optional>
             <optional>
-              <attribute name="pianoRight">
+              <attribute name="pianoII">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="pianoI">
                 <data type="boolean"/>
               </attribute>
             </optional>

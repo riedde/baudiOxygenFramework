@@ -87,7 +87,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworksDir}/baudiOxygenFramework/xql/idCRremarks.xql</String>
+																<String>${frameworkDir}/xql/idCRremarks.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -133,7 +133,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/baudiOxygenFramework/xsl/orderCR.xsl</String>
+																<String>${frameworkDir}/xsl/orderCR.xsl</String>
 															</entry>
 															<entry>
 																<String>sourceLocation</String>
@@ -187,7 +187,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworksDir}/baudiOxygenFramework/xql/newRemark.xql</String>
+																<String>${frameworkDir}/xql/newRemark.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
