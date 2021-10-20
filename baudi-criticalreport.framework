@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<serialized version="21.1" xml:space="preserve">
+<serialized xml:space="preserve">
 	<serializableOrderedMap>
 		<entry>
 			<String>document.types</String>
 			<documentTypeDescriptor-array>
 				<documentTypeDescriptor>
+					<field name="webResources">
+						<null/>
+					</field>
 					<field name="extensionPatch">
 						<null/>
 					</field>
@@ -17,7 +20,7 @@
 								<Integer>4</Integer>
 							</field>
 							<field name="uri">
-								<String>${frameworks}/baudi/schema/cr_baudi.rng</String>
+								<String>${frameworks}/baudiOxygenFramework/schema/cr_baudi.rng</String>
 							</field>
 						</docTypeSchema>
 					</field>
@@ -33,7 +36,7 @@
 								<cssFile-array>
 									<cssFile>
 										<field name="href">
-											<String>${frameworks}/baudi/css/baudi_cr.css</String>
+											<String>${frameworks}/baudiOxygenFramework/css/baudi_cr.css</String>
 										</field>
 										<field name="title">
 											<String>CriticalReport</String>
@@ -84,7 +87,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworksDir}/baudi/xql/idCRremarks.xql</String>
+																<String>${frameworksDir}/baudiOxygenFramework/xql/idCRremarks.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>
@@ -130,7 +133,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworkDir}/xsl/orderCR.xsl</String>
+																<String>${frameworkDir}/baudiOxygenFramework/xsl/orderCR.xsl</String>
 															</entry>
 															<entry>
 																<String>sourceLocation</String>
@@ -184,7 +187,7 @@
 														<serializableOrderedMap>
 															<entry>
 																<String>script</String>
-																<String>${frameworksDir}/baudi/xql/newRemark.xql</String>
+																<String>${frameworksDir}/baudiOxygenFramework/xql/newRemark.xql</String>
 															</entry>
 														</serializableOrderedMap>
 													</field>

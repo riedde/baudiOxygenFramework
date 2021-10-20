@@ -77,12 +77,27 @@
               </attribute>
             </optional>
             <optional>
+              <attribute name="bassoonI">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="bassoonII">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
               <attribute name="bassInstr">
                 <data type="boolean"/>
               </attribute>
             </optional>
             <optional>
               <attribute name="bassSolo">
+                <data type="boolean"/>
+              </attribute>
+            </optional>
+            <optional>
+              <attribute name="bells">
                 <data type="boolean"/>
               </attribute>
             </optional>
@@ -354,7 +369,28 @@
                 </optional><optional>
               <attribute name="sourceIII">
                 <data type="boolean"/>
-              </attribute>
+              </attribute></optional><optional>
+                  <attribute name="sourceIV">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceV">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceVI">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceVII">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceVIII">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceIX">
+                    <data type="boolean"/>
+                  </attribute></optional><optional>
+                  <attribute name="sourceX">
+                    <data type="boolean"/>
+                  </attribute>
             </optional>
           </element>
         </element>

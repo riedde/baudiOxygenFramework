@@ -126,31 +126,14 @@ layer:before {
            edit, '@clarinetII',
            values, 'true',
            labels, 'Klar2')
-           '\A'
            oxy_checkbox(
-           edit, '@violin',
+           edit, '@bassoonI',
            values, 'true',
-           labels,'Vl')
+           labels, 'Fg1')
            oxy_checkbox(
-           edit, '@violinI',
+           edit, '@bassoonI',
            values, 'true',
-           labels, 'Vl1')
-           oxy_checkbox(
-           edit, '@violinII',
-           values, 'true',
-           labels, 'Vl2')
-           oxy_checkbox(
-           edit, '@viola',
-           values, 'true',
-           labels, 'Vla')
-           oxy_checkbox(
-           edit, '@cello',
-           values, 'true',
-           labels, 'Vlc')
-           oxy_checkbox(
-           edit, '@bassInstr',
-           values, 'true',
-           labels, 'Kb')
+           labels, 'Fg2')
            '\A'
            oxy_checkbox(
            edit, '@trumpet',
@@ -207,9 +190,38 @@ layer:before {
            labels, 'Tb')
            '\A'
            oxy_checkbox(
+           edit, '@violin',
+           values, 'true',
+           labels,'Vl')
+           oxy_checkbox(
+           edit, '@violinI',
+           values, 'true',
+           labels, 'Vl1')
+           oxy_checkbox(
+           edit, '@violinII',
+           values, 'true',
+           labels, 'Vl2')
+           oxy_checkbox(
+           edit, '@viola',
+           values, 'true',
+           labels, 'Vla')
+           oxy_checkbox(
+           edit, '@cello',
+           values, 'true',
+           labels, 'Vlc')
+           oxy_checkbox(
+           edit, '@bassInstr',
+           values, 'true',
+           labels, 'Kb')
+           '\A'
+           oxy_checkbox(
            edit, '@timpani',
            values, 'true',
            labels, 'Pk')
+           oxy_checkbox(
+           edit, '@bells',
+           values, 'true',
+           labels, 'Gl')
            oxy_checkbox(
            edit, '@harpa',
            values, 'true',
