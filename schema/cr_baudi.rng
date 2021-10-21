@@ -403,6 +403,20 @@
                   </attribute>
             </optional>
           </element>
+          <element name="editions">
+            <optional>
+              <attribute name="score">
+                <data type="boolean"/>
+              </attribute>
+            </optional><optional>
+              <attribute name="pianoReduction">
+                <data type="boolean"/>
+              </attribute>
+            </optional><optional>
+              <attribute name="harmoniumVoice">
+                <data type="boolean"/>
+              </attribute></optional>
+          </element>
         </element>
       </oneOrMore>
     </element>

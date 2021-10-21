@@ -422,3 +422,22 @@ sources{
         labels, 'ED-StTTBB')
         
 }
+
+editions:before {
+  content: 'Editionen: '
+}
+
+editions{
+  content: oxy_checkbox(
+        edit, '@score',
+        values, 'true',
+        labels, 'Partitur')
+        oxy_checkbox(
+        edit, '@pianoReduction',
+        values, 'true',
+        labels, 'Klavierauszug')
+        oxy_checkbox(
+        edit, '@harmoniumVoice',
+        values, 'true',
+        labels, 'Harm.-Stimme')
+}
