@@ -13,17 +13,18 @@ let $id := uuid:randomUUID()
 let $crID as xs:string := concat('baudi-30-', substring(fn:string($id), 1, 8))
 
 let $remark := <remark xml:id="{$crID}" xmlns="http://www.baumann-digital.de/ns/criticalReport">
-                  <item category=""></item>
-                  <mdiv></mdiv>
-                  <measureStart></measureStart>
-                  <countTimeStart></countTimeStart>
-                  <measureEnd></measureEnd>
-                  <countTimeEnd></countTimeEnd>
-                  <layer></layer>
-                  <voice></voice>
-                  <note></note>
+                  <item category=""/>
+                  <mdiv/>
+                  <measureStart/>
+                  <countTimeStart/>
+                  <measureEnd/>
+                  <countTimeEnd/>
+                  <layer/>
+                  <voice/>
+                  <note/>
                   <note type="intern"></note>
-                  <sources></sources>
+                  <sources/>
+                  <editions/>
                </remark>                         
 
 return
