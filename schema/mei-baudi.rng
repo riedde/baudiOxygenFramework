@@ -5,7 +5,7 @@
          xmlns="http://relaxng.org/ns/structure/1.0"
          datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
          ns="http://www.music-encoding.org/ns/mei"><!--
-Schema generated from ODD source 2021-12-07T14:46:43Z. .
+Schema generated from ODD source 2021-12-07T17:47:49Z. .
 TEI Edition: Version 4.0.0
 TEI Edition Location: https://www.tei-c.org/Vault/P5//
   
@@ -4153,6 +4153,9 @@ Suggested values include: 1] confirmation; 2] addition; 3] deletion; 4] substitu
          </zeroOrMore>
          <zeroOrMore>
             <ref name="mei_model.graphicLike"/>
+         </zeroOrMore>
+         <zeroOrMore>
+            <ref name="mei_point"/>
          </zeroOrMore>
          <ref name="mei_att.common.attributes"/>
          <ref name="mei_att.coordinated.attributes"/>
@@ -10242,18 +10245,14 @@ Suggested values include: 1] internal; 2] external; 3] conjecture</a:documentati
    </define>
    <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
             id="mei-att.linking-corresp-check_correspTarget-constraint-rule-90">
-      <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
-                xmlns:rng="http://relaxng.org/ns/structure/1.0"
+      <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
                 xmlns:sch="http://purl.oclc.org/dsdl/schematron"
                 xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
                 xmlns="http://www.tei-c.org/ns/1.0"
-                context="@corresp">
-         <sch:assert role="warning" test="not(normalize-space(.) eq '')">@corresp attribute
-                should have content.</sch:assert>
+                context="mei:*[local-name(.) != 'relation']/@corresp">
+         <sch:assert role="warning" test="not(normalize-space(.) eq '')">@corresp attribute should have content.</sch:assert>
          <sch:assert role="warning"
-                     test="every $i in tokenize(., '\s+') satisfies substring($i,2)=//mei:*/@xml:id">Each
-                value in @corresp should correspond to the @xml:id attribute of an
-                element.</sch:assert>
+                     test="every $i in tokenize(., '\s+') satisfies substring($i,2)=//mei:*/@xml:id">Each value in @corresp should correspond to the @xml:id attribute of an element.</sch:assert>
       </sch:rule>
    </pattern>
    <define name="mei_att.linking.attribute.follows">
@@ -16062,24 +16061,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             <ref name="mei_ambitus"/>
          </optional>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_staffDefn-constraint-rule-136">
-            <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      context="mei:staffDef[not(ancestor::mei:staff)]">
-               <sch:let name="thisstaff" value="@n"/>
-               <sch:assert test="@n">StaffDef must have an n attribute.</sch:assert>
-               <sch:assert test="@lines or preceding::mei:staffDef[@n=$thisstaff and @lines]"> Either
-            @lines must be present or a preceding staffDef with the same value for @n and @lines
-            must exist.</sch:assert>
-               <sch:assert test="count(mei:clef) + count(mei:clefGrp) &lt; 2">Only one clef or clefGrp is
-            permitted.</sch:assert>
-            </sch:rule>
-         </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_ancestor_staff-constraint-rule-137">
+                  id="mei-staffDef-Check_ancestor_staff-constraint-rule-136">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16092,21 +16074,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_ancestor_staff_lines-constraint-rule-138">
-            <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
-                      xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                      xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                      xmlns="http://www.tei-c.org/ns/1.0"
-                      context="mei:staffDef[ancestor::mei:staff and not(@n)]">
-               <sch:let name="thisstaff" value="ancestor::mei:staff/@n"/>
-               <sch:assert test="@lines or preceding::mei:staffDef[@n=$thisstaff and @lines]"> Either
-            @lines must be present or a preceding staffDef with matching @n value and @lines must
-            exist.</sch:assert>
-            </sch:rule>
-         </pattern>
-         <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_clef_position_staffDef-constraint-rule-139">
+                  id="mei-staffDef-Check_clef_position_staffDef-constraint-rule-137">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16118,7 +16086,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_clef_position_staffDef_nolines-constraint-rule-140">
+                  id="mei-staffDef-Check_clef_position_staffDef_nolines-constraint-rule-138">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16133,7 +16101,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_tab_strings_lines-constraint-rule-141">
+                  id="mei-staffDef-Check_tab_strings_lines-constraint-rule-139">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16147,7 +16115,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffDef-Check_tab_strings_nolines-constraint-rule-142">
+                  id="mei-staffDef-Check_tab_strings_nolines-constraint-rule-140">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16239,7 +16207,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             <ref name="mei_grpSym"/>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-staffGrp-Check_staffGrp_unique_staff_n_values-constraint-rule-147">
+                  id="mei-staffGrp-Check_staffGrp_unique_staff_n_values-constraint-rule-145">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16283,7 +16251,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
          <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">A reference to a previously defined symbol.</a:documentation>
          <empty/>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-symbol-symbolDef_symbol_attributes_required-constraint-rule-148">
+                  id="mei-symbol-symbolDef_symbol_attributes_required-constraint-rule-146">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16315,7 +16283,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-tempo-tempo_in_header_disallow_most_attrs-constraint-rule-149">
+                  id="mei-tempo-tempo_in_header_disallow_most_attrs-constraint-rule-147">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16328,7 +16296,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-tempo-tempo_start-type_attributes_required-constraint-rule-150">
+                  id="mei-tempo-tempo_start-type_attributes_required-constraint-rule-148">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16357,23 +16325,19 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
             </choice>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-term-text-matched-type-constraint-report-9">
-            <rule context="tei:term">
-               <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                           xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type = 'workGroup' and not(@subtype = ('chamber','instrumental','orchestral','vocal'))"> Subtype of
-                workGroup should be one of 'chamber','instrumental','orchestral','vocal'</sch:report>
-               <sch:report xmlns:rng="http://relaxng.org/ns/structure/1.0"
-                           xmlns:sch="http://purl.oclc.org/dsdl/schematron"
-                           xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
-                           xmlns="http://www.tei-c.org/ns/1.0"
-                           test="@type ='genre' and not( @subtype = ('cantata','choir','song','stringQuartett','violin','organ','piano'))"> Subtype of genre should one of be 'cantata','choir','song','stringQuartett','violin','organ','piano'</sch:report>
-            </rule>
+                  id="mei-term-text-matched-type-constraint-rule-149">
+            <sch:rule xmlns:rng="http://relaxng.org/ns/structure/1.0"
+                      xmlns:sch="http://purl.oclc.org/dsdl/schematron"
+                      xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+                      xmlns="http://www.tei-c.org/ns/1.0"
+                      context="mei:term[@type]">
+               <sch:report test="@type = 'sourceType' and not(. = ('copy','copyPrinted','manuscript','print'))">Content must be 'copy','copyPrinted','manuscript','print'.</sch:report>
+               <sch:report test="@type = 'workGroup' and not(. = ('chamber','instrumental','orchestral','solo','vocal'))"> Content must be 'chamber','instrumental','orchestral','solo','vocal'.</sch:report>
+               <sch:report test="@type ='genre' and not(. = ('cantata','choir','song','stringQuartett','violin','organ','piano'))">Content must be 'cantata','choir','song','stringQuartett','violin','organ','piano'.</sch:report>
+            </sch:rule>
          </pattern>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-term-Check_term_dataTarget-constraint-rule-151">
+                  id="mei-term-Check_term_dataTarget-constraint-rule-150">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -16404,7 +16368,7 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
          <attribute name="type">
             <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             <choice>
-               <value>source</value>
+               <value>sourceType</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
                <value>workGroup</value>
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
@@ -16414,25 +16378,6 @@ Suggested values include: 1] person; 2] corporation; 3] location; 4] process; 5]
                <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
             </choice>
          </attribute>
-         <optional>
-            <attribute name="subtype">
-               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               <choice>
-                  <value>chamber</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>orchestral</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>vocal</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>song</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>choir</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-                  <value>stingQuartett</value>
-                  <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"/>
-               </choice>
-            </attribute>
-         </optional>
          <empty/>
       </element>
    </define>
@@ -16962,7 +16907,7 @@ Suggested values include: 1] alternative; 2] arrangement; 3] carrier; 4] date; 5
             <ref name="mei_li"/>
          </zeroOrMore>
          <pattern xmlns="http://purl.oclc.org/dsdl/schematron"
-                  id="mei-list-list_type_constraint-constraint-rule-152">
+                  id="mei-list-list_type_constraint-constraint-rule-151">
             <sch:rule xmlns:xi="http://www.w3.org/2001/XInclude"
                       xmlns:rng="http://relaxng.org/ns/structure/1.0"
                       xmlns:sch="http://purl.oclc.org/dsdl/schematron"
@@ -17120,6 +17065,25 @@ Suggested values include: 1] spoken; 2] thought; 3] written; 4] soCalled; 5] for
          <empty/>
          <ref name="mei_att.common.attributes"/>
          <ref name="mei_att.ambNote.log.attributes"/>
+         <empty/>
+      </element>
+   </define>
+   <define name="mei_point">
+      <element name="point">
+         <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Defines a point that can be uses for polygons.</a:documentation>
+         <empty/>
+         <optional>
+            <attribute name="x">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Indicates the x coordinate.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
+         <optional>
+            <attribute name="y">
+               <a:documentation xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0">Indicates the y coordinate.</a:documentation>
+               <data type="nonNegativeInteger"/>
+            </attribute>
+         </optional>
          <empty/>
       </element>
    </define>
